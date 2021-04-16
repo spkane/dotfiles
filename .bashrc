@@ -352,6 +352,7 @@ if command -v "direenv" &> /dev/null; then
   eval "$(direnv hook bash)"
 fi
 
+touch "${HOME}/.bashrc.personal"
 for i in $(ls -C1 ${HOME}/.bashrc.personal*); do
     source "${i}"
 done
