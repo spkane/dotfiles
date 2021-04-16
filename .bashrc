@@ -171,6 +171,8 @@ fi
 alias ag="ag -f --hidden"
 alias aga="ag -f --hidden -a"
 alias agai="ag -f --hidden -a -i"
+alias aptsearch="apt-cache search"
+alias aptprovides="apt-file update; apt-file search"
 alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
 alias curl="${curlbin}"
 alias dc="docker-compose"
