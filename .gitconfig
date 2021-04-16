@@ -104,3 +104,7 @@
 
 [url "git@github.com:"]
     insteadOf = http://github.com/
+
+[init]
+    templateDir = ~/.git-template
+    defaultBranch = main
