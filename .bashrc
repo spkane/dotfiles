@@ -311,13 +311,22 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_DEFAULT_OPS="--extended"
 
+mkdir -p "${HOME}/.bash_completion.d"
 for i in $(ls -C1 ${HOME}/.bash_completion.d); do
     source "${HOME}/.bash_completion.d/${i}"
 done
 
-source <(pipenv --completion)
-source <(golangci-lint completion bash)
-source <(kubectl completion bash)
+if command -v "pipenv" &> /dev/null; then
+  source <(pipenv --completion)
+fi
+
+if command -v "golangci-lint" &> /dev/null; then
+  source <(golangci-lint completion bash)
+fi
+
+if command -v "kubectl" &> /dev/null; then
+  source <(kubectl completion bash)
+fi
 
 complete -C aws_completer aws
 complete -F __start_kubectl k
