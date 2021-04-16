@@ -162,7 +162,7 @@ unset MAILCHECK
 export SCM_CHECK=true
 
 if [ "${UNAME}" != "Darwin" ]; then
-  curlbin=$(find /usr/local/Cellar/curl -name curl | grep bin | head -n 1)
+  curlbin=$([ -d /usr/local/Cellar/curl ] && find /usr/local/Cellar/curl -name curl | grep bin | head -n 1)
   export curlbin
 else
   export curlbin="curl"
@@ -259,10 +259,14 @@ if [ "${UNAME}" != "Darwin" ]; then
 fi
 
 #pyenv
-alias pyenv="CFLAGS=\"-I$(brew --prefix openssl)/include\" LDFLAGS=\"-L$(brew --prefix openssl)/lib\" pyenv "
+if [ "${UNAME}" != "Darwin" ]; then
+  alias pyenv="CFLAGS=\"-I$([ -f /usr/local/bin/brew ] && brew --prefix openssl)/include\" LDFLAGS=\"-L$([ -f /usr/local/bin/brew ] && brew --prefix openssl)/lib\" pyenv "
+fi
 
 #rbenv
-alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$(brew --prefix openssl)\" rbenv "
+if [ "${UNAME}" != "Darwin" ]; then
+  alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /usr/local/bin/brew ] && brew --prefix openssl)\" rbenv "
+fi
 
 #pianobar
 if [ "${UNAME}" != "Darwin" ]; then
@@ -288,8 +292,10 @@ fi
 export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source "/usr/local/etc/profile.d/bash_completion.sh"
 
-if [ -f "$(brew --prefix)/etc/bash_c/usr/local/etc/profile.d/bashompletion.d/vagrant" ]; then
-    source "$(brew --prefix)/etc/bash_completion.d/vagrant"
+if [ "${UNAME}" != "Darwin" ]; then
+  if [ -f "$([ -f /usr/local/bin/brew ] && brew --prefix)/etc/bash_c/usr/local/etc/profile.d/bashompletion.d/vagrant" ]; then
+    source "$([ -f /usr/local/bin/brew ] && brew --prefix)/etc/bash_completion.d/vagrant"
+  fi
 fi
 
 [ -f ~/.hub-completion.sh ] && source ~/.hub-completion.sh
