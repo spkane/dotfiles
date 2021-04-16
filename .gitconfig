@@ -1,0 +1,106 @@
+[gpg]
+    program = gpg
+
+[commit]
+    gpgsign = false
+
+[include]
+    path = ~/.gitconfig.personal
+
+[includeIf "gitdir:~/dev/m10/"]
+    path = ~/.gitconfig.m10
+
+[includeIf "gitdir:~/dev/superorbital/"]
+    path = ~/.gitconfig.superorbital
+
+[core]
+    excludesfile = ~/.gitignore
+    editor = code --wait --new-window
+    pager = less -r
+
+[format]
+    numbered = auto
+
+[gc]
+    packrefs = 0
+
+[sendemail]
+    suppressfrom = true
+
+[alias]
+    ci = commit
+    co = checkout
+    co-pr = !sh -c 'git fetch upstream pull/$1/head:pr/$1 && git checkout pr/$1' -
+    fe = fetch
+    st = status
+    br = branch
+    dt = difftool
+    mt = mergetool
+    df  = diff --color-words
+    sh = show --color-words
+    a  = add
+    l  = log
+    lol = log --pretty=oneline --abbrev-commit --graph --decorate
+    lg = log --pretty=format:'%C(yellow)%h%C(reset) %C(blue)%an%C(reset) %C(cyan)%cr%C(reset) %s %C(green)%d%C(reset)' --graph --date-order
+    clobber = !git stash && git reset --hard && git clean -fd
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    ui = auto
+    interactive = auto
+
+[diff]
+    tool = vsc
+
+[difftool "vsc"]
+    cmd = code --wait --new-window --diff $LOCAL $REMOTE
+
+[difftool]
+    prompt = false
+
+[merge]
+    log = true
+    stat = true
+    tool = vsc
+
+[mergetool "vsc"]
+    cmd = code --wait --new-window $MERGED
+
+[mergetool]
+    keepBackup = true
+
+[branch]
+    autoseupmerge = always
+    autosetuprebase = always
+
+[branch "master"]
+    mergeoptions = --ff-only
+
+[branch "staging"]
+    mergeoptions = --ff-only
+
+[branch "production"]
+    mergeoptions = --ff-only
+
+[push]
+    default = nothing
+
+[gitreview]
+    username = spkane
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    required = true
+    process = git-lfs filter-process
+
+[hub]
+    host = github.com
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[url "git@github.com:"]
+    insteadOf = http://github.com/

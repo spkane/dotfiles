@@ -1,0 +1,89 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# use custom prompt order
+format = """\
+    $env_var\
+    $username\
+    $hostname\
+    $directory\
+    $kubernetes\
+    $aws\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $hg_branch\
+    $package\
+    $dotnet\
+    $golang\
+    $java\
+    $nodejs\
+    $python\
+    $ruby\
+    $rust\
+    $terraform\
+    $nix_shell\
+    $conda\
+    $memory_usage\
+    $cmd_duration\
+    $line_break\
+    $jobs\
+    $battery\
+    $time\
+    $character\
+    """
+
+# Wait 30 milliseconds for starship to check files under the current directory.
+scan_timeout = 30
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character]      # The name of the module we are configuring is 'character'
+symbol = '❯'     # The 'symbol' segment is being set to '➜'
+
+[aws]
+format = '[$symbol $profile($region)]($style) '
+style = '#668cff'
+symbol = '🅰'
+
+[aws.region_aliases]
+us-east-1 = 'use1'
+us-east-2 = 'use2'
+us-west-1 = 'usw1'
+us-west-2 = 'usw2'
+
+[directory]
+truncation_length = 3
+
+[env_var]
+variable = 'PROMPT_ID'
+format = '[$env_value]($style)'
+default = '🔴'
+
+[golang]
+format = '[$symbol$version]($style)'
+
+[hostname]
+ssh_only = true
+format = '⟪[$hostname]($style)⟫'
+trim_at = '.'
+disabled = false
+
+[kubernetes]
+format = '[$symbol$context\($namespace\)]($style) '
+symbol = '⛵'
+style = 'green'
+disabled = false
+
+[kubernetes.context_aliases]
+
+[python]
+format = '[${symbol}${pyenv_prefix}${version}($virtualenv)]($style) '
+style = 'yellow'
+
+[ruby]
+format = '[$symbol$version]($style) '
+
+[username]
+disabled = true
+
