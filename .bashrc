@@ -348,7 +348,7 @@ if command -v "fasd" &> /dev/null; then
   eval "$(fasd --init auto)"
 fi
 
-if command -v "direenv" &> /dev/null; then
+if command -v "direnv" &> /dev/null; then
   eval "$(direnv hook bash)"
 fi
 
