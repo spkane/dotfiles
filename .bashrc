@@ -178,6 +178,8 @@ alias curl="${curlbin}"
 alias dc="docker-compose"
 alias dm="docker-machine"
 alias ekstoken='aws eks get-token --cluster-name $(kubectl config current-context | cut -d / -f 2) | jq .status.token'
+alias esnap="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save ./snapshot.db"
+alias erestore="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --data-dir /var/lib/etcd-backup snapshot restore ./snapshot.db"
 alias g="git"
 alias gdoc="godoc -http=127.0.0.1:6060"
 alias gpoh="git push origin HEAD"
