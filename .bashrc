@@ -183,6 +183,7 @@ alias gpoh="git push origin HEAD"
 alias gpohf="git push -f origin HEAD"
 alias h="history"
 alias htop="sudo htop"
+alias ibrew='echo Run: /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 alias k="kubectl"
 alias ka="kubectl api-resources"
 alias kaf="kubectl apply -f"
