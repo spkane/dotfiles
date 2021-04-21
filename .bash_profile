@@ -21,7 +21,7 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 
 if command -v "dadjoke" &> /dev/null; then
   echo
-  dadjoke
+  dadjoke random
   echo
 fi
 
