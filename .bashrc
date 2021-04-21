@@ -200,6 +200,7 @@ alias kgpo='kubectl get pod'
 alias kgsvcoyaml='kubectl get service -o=yaml'
 alias kgsvcslwn='watch kubectl get service --show-labels --namespace'
 alias kgsvcwn='watch kubectl get service --namespace'
+alias ki='kubectl cluster-info'
 alias kmemalloc='kutil | grep % | awk '\''{print $5}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*75), "%\n" } }'\'''
 alias kns="kubens"
 alias komgd='kubectl delete --grace-period 0 --force'
