@@ -166,6 +166,9 @@ if [ "${UNAME}" == "Darwin" ]; then
   alias curl="${curlbin}"
 fi
 
+# Kubernetes Yaml - Quickly
+export dr="--dry-run=client -o yaml"
+
 alias ag="ag -f --hidden"
 alias aga="ag -f --hidden -a"
 alias agai="ag -f --hidden -a -i"
