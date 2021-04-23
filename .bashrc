@@ -212,7 +212,7 @@ alias kmemalloc='kutil | grep % | awk '\''{print $5}'\'' | awk '\''{ sum += $1 }
 #alias kns="kubens"
 alias kns='kubectl config set-context --current --namespace='
 alias komgd='kubectl delete --grace-period 0 --force'
-alias kr='kuebctl run'
+alias kr='kubectl run'
 alias ksysgpo='kubectl --namespace=kube-system get pod'
 alias kutil='kubectl get nodes --no-headers | awk '\''{print $1}'\'' | xargs -I {} sh -c '\''echo {} ; kubectl describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo '\'''
 alias kw='watch -n 0.5 "kubectl config current-context; echo ""; kubectl config view | grep namespace; echo ""; kubectl get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"'
