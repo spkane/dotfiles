@@ -184,7 +184,7 @@ alias g="git"
 alias gdoc="godoc -http=127.0.0.1:6060"
 alias gpoh="git push origin HEAD"
 alias gpohf="git push -f origin HEAD"
-alias h="history"
+alias h="history | grep -i"
 alias htop="sudo htop"
 alias ibrew='echo Run: /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 alias k="kubectl"
@@ -199,6 +199,7 @@ alias kctx="kubectx"
 alias kde='kubectl describe'
 alias kd='kubectl delete'
 alias kdf="kubectl delete -f"
+alias ke='kubectl exec'
 alias kevents="kubectl get events -A --sort-by='{.lastTimestamp}'"
 alias kex="kubectl explain --recursive"
 alias kg='kubectl get'
