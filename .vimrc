@@ -44,8 +44,8 @@ syntax on
 
 " Indentation ----------------------------------------------------------------
 set expandtab
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set autoindent
 filetype indent on      " load filetype-specific indent files
 " DO NOT set smartindent - interferes with file type based indentation
