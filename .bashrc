@@ -189,10 +189,10 @@ alias htop="sudo htop"
 alias ibrew='echo Run: /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 alias k="kubectl"
 alias ka="kubectl api-resources"
-
 alias kaf="kubectl apply -f"
-alias kc="kubeconform -summary -strict"
+alias kc="kubectl create"
 alias kcf="kubectl create -f"
+alias kconf="kubeconform -summary -strict"
 alias kcpualloc='kutil | grep % | awk '\''{print $1}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*20), "%\n" } }'\'''
 alias kcpyd='kubectl create pod -o yaml --dry-run=client'
 alias kctx="kubectx"
