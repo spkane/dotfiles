@@ -196,7 +196,8 @@ alias kconf="kubeconform -summary -strict"
 alias kcpualloc='kutil | grep % | awk '\''{print $1}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*20), "%\n" } }'\'''
 alias kcpyd='kubectl create pod -o yaml --dry-run=client'
 alias kctx="kubectx"
-alias kd='kubectl describe'
+alias kde='kubectl describe'
+alias kd='kubectl delete'
 alias kdf="kubectl delete -f"
 alias kevents="kubectl get events -A --sort-by='{.lastTimestamp}'"
 alias kex="kubectl explain --recursive"

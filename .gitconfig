@@ -8,10 +8,10 @@
     path = ~/.gitconfig.personal
 
 [includeIf "gitdir:~/dev/m10/"]
-    path = ~/.gitconfig.m10
+    path = ~/.gitconfig.personal.m10
 
 [includeIf "gitdir:~/dev/superorbital/"]
-    path = ~/.gitconfig.superorbital
+    path = ~/.gitconfig.personal.superorbital
 
 [core]
     excludesfile = ~/.gitignore
