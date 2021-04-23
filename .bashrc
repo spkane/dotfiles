@@ -189,8 +189,10 @@ alias htop="sudo htop"
 alias ibrew='echo Run: /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 alias k="kubectl"
 alias ka="kubectl api-resources"
+
 alias kaf="kubectl apply -f"
 alias kc="kubeconform -summary -strict"
+alias kcf="kubectl create -f"
 alias kcpualloc='kutil | grep % | awk '\''{print $1}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*20), "%\n" } }'\'''
 alias kcpyd='kubectl create pod -o yaml --dry-run=client'
 alias kctx="kubectx"
@@ -199,14 +201,16 @@ alias kdf="kubectl delete -f"
 alias kevents="kubectl get events -A --sort-by='{.lastTimestamp}'"
 alias kex="kubectl explain --recursive"
 alias kg='kubectl get'
-alias kgpo='kubectl get pod'
+alias kgp='kubectl get pod'
 alias kgsvcoyaml='kubectl get service -o=yaml'
 alias kgsvcslwn='watch kubectl get service --show-labels --namespace'
 alias kgsvcwn='watch kubectl get service --namespace'
 alias ki='kubectl cluster-info'
 alias kmemalloc='kutil | grep % | awk '\''{print $5}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*75), "%\n" } }'\'''
-alias kns="kubens"
+#alias kns="kubens"
+alias kns='kubectl config set-context --current --namespace='
 alias komgd='kubectl delete --grace-period 0 --force'
+alias kr='kuebctl run'
 alias ksysgpo='kubectl --namespace=kube-system get pod'
 alias kutil='kubectl get nodes --no-headers | awk '\''{print $1}'\'' | xargs -I {} sh -c '\''echo {} ; kubectl describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo '\'''
 alias kw='watch -n 0.5 "kubectl config current-context; echo ""; kubectl config view | grep namespace; echo ""; kubectl get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"'
