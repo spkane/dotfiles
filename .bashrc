@@ -196,7 +196,7 @@ alias kconf="kubeconform -summary -strict"
 alias kcpualloc='kutil | grep % | awk '\''{print $1}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*20), "%\n" } }'\'''
 alias kcpyd='kubectl create pod -o yaml --dry-run=client'
 alias kctx="kubectx"
-alias kd='kubectl delete'
+alias kd='kubectl describe'
 alias kdf="kubectl delete -f"
 alias kevents="kubectl get events -A --sort-by='{.lastTimestamp}'"
 alias kex="kubectl explain --recursive"
@@ -206,6 +206,7 @@ alias kgsvcoyaml='kubectl get service -o=yaml'
 alias kgsvcslwn='watch kubectl get service --show-labels --namespace'
 alias kgsvcwn='watch kubectl get service --namespace'
 alias ki='kubectl cluster-info'
+alias kl='kubectl logs'
 alias kmemalloc='kutil | grep % | awk '\''{print $5}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*75), "%\n" } }'\'''
 #alias kns="kubens"
 alias kns='kubectl config set-context --current --namespace='
