@@ -38,6 +38,9 @@ else
  export PROMPT_ID="🟢"
 fi
 
+# Colorize stderr
+color()(set -o pipefail;"$@" 2> >(sed $'s,.*,\e[31m&\e[m,'>&2))
+
 function title {
     echo -ne "\033]0;${*}\007"
 }
