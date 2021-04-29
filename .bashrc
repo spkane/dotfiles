@@ -359,6 +359,10 @@ export GOARCH=amd64
 export GOOS=darwin
 #export CGO_ENABLED=1
 
+if command -v "dyff" &> /dev/null; then
+  export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
+fi
+
 if command -v "fasd" &> /dev/null; then
   eval "$(fasd --init auto)"
 fi
