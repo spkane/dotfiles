@@ -241,7 +241,7 @@ alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 if command -v "keychain" &> /dev/null; then
   function load_keys {
-    hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 0845757D65596830 FB4CAF2F3EE9E5C9 7A54FF362955E1BE)"
+    hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 0845757D65596830 FB4CAF2F3EE9E5C9 7A54FF362955E1BE 2C7FBB435BF65D3D)"
   }
 fi
 

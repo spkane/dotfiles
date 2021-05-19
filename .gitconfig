@@ -7,6 +7,9 @@
 [include]
     path = ~/.gitconfig.personal
 
+[includeIf "gitdir:~/dev/amg/"]
+  path = ~/.gitconfig.personal.amg
+
 [includeIf "gitdir:~/dev/m10/"]
     path = ~/.gitconfig.personal.m10
 
