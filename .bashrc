@@ -214,7 +214,9 @@ alias ki='kubectl cluster-info'
 alias kl='kubectl logs'
 alias kmemalloc='kutil | grep % | awk '\''{print $5}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*75), "%\n" } }'\'''
 #alias kns="kubens"
-alias kns='kubectl config set-context --current --namespace='
+function kns() {
+  kubectl config set-context --current --namespace=${1}
+}
 alias komgd='kubectl delete --grace-period 0 --force'
 alias kr='kubectl run'
 alias ksysgpo='kubectl --namespace=kube-system get pod'
@@ -306,7 +308,8 @@ if [[ -z "$LC_EXTRATERM_COOKIE" ]]; then
 fi
 
 #Apply our completions last
-export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+(readonly | cut -d= -f1 | cut -d' ' -f3 | grep -q BASH_COMPLETION_COMPAT_DIR) || export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source "/usr/local/etc/profile.d/bash_completion.sh"
 
 if [ "${UNAME}" != "Darwin" ]; then
