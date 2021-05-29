@@ -116,7 +116,7 @@ else
   export PAGER="more"
 fi
 
-PATH="${HOME}/bin:${HOME}/.krew/bin:/usr/local/bin:/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
+PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
 
 if [ "${UNAME}" == "SunOS" ]
 then
