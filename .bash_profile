@@ -32,3 +32,6 @@ if [ -f '/usr/local/google-cloud-sdk/path.bash.inc' ]; then source '/usr/local/g
 if [ -f '/usr/local/google-cloud-sdk/completion.bash.inc' ]; then source '/usr/local/google-cloud-sdk/completion.bash.inc'; fi
 
 test -e "${HOME}/.cargo/env" && source "${HOME}/.cargo/env"
+
+export PATH="$PATH:/Users/spkane/.local/bin"
+

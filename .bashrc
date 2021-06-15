@@ -178,6 +178,7 @@ alias agai="ag -f --hidden -a -i"
 alias aptsearch="apt-cache search"
 alias aptprovides="apt-file update; apt-file search"
 alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
+alias awsume=". awsume"
 alias dc="docker-compose"
 alias dm="docker-machine"
 alias ekstoken='aws eks get-token --cluster-name $(kubectl config current-context | cut -d / -f 2) | jq .status.token'
@@ -348,6 +349,10 @@ if command -v "kubectl" &> /dev/null; then
   source <(kubectl completion bash)
 fi
 
+if command -v "register-python-argcomplete" &> /dev/null; then
+  eval "$(register-python-argcomplete pipx)"
+fi
+
 complete -C aws_completer aws
 complete -F __start_kubectl k
 
@@ -380,3 +385,6 @@ touch "${HOME}/.bashrc.personal"
 for i in $(ls -C1 ${HOME}/.bashrc.personal*); do
     source "${i}"
 done
+
+export PATH="$PATH:/Users/spkane/.local/bin"
+
