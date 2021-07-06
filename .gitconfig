@@ -10,6 +10,9 @@
 [includeIf "gitdir:~/dev/amg/"]
   path = ~/.gitconfig.personal.amg
 
+[includeIf "gitdir:~/dev/bloomberg/"]
+  path = ~/.gitconfig.personal.bloomberg
+
 [includeIf "gitdir:~/dev/m10/"]
     path = ~/.gitconfig.personal.m10
 

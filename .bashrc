@@ -244,7 +244,7 @@ alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 if command -v "keychain" &> /dev/null; then
   function load_keys {
-    hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 0845757D65596830 FB4CAF2F3EE9E5C9 7A54FF362955E1BE 2C7FBB435BF65D3D)"
+    hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 0845757D65596830 7A54FF362955E1BE 45D6A71D79DD1F7D)"
   }
 fi
 
@@ -353,6 +353,10 @@ if command -v "register-python-argcomplete" &> /dev/null; then
   eval "$(register-python-argcomplete pipx)"
 fi
 
+if command -v "velero" &> /dev/null; then
+ source <(velero completion bash)
+fi
+
 complete -C aws_completer aws
 complete -F __start_kubectl k
 
@@ -367,6 +371,7 @@ export GOBIN="$GOPATH/bin"
 export PATH="${GOBIN}:${PATH}"
 export GOARCH=amd64
 export GOOS=darwin
+export GOPRIVATE="git.ask.com"
 #export CGO_ENABLED=1
 
 if command -v "dyff" &> /dev/null; then
