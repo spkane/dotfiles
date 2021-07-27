@@ -11,6 +11,7 @@ if [[ "${ITERM_PROFILE}" == "Class" ]]; then
   export CLEAN_SHELL="true"
 fi
 
+export TZ='America/Los_Angeles'
 export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
 
 # Don't forget to backup .inputrc (readline history searching)
@@ -126,6 +127,11 @@ fi
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "${HOME}/bin/hub"  ]; then
   eval "$(hub alias -s)"
+fi
+
+#thefuck
+if [ -e "/usr/local/bin/thefuck" ]; then
+  eval $(thefuck --alias u)
 fi
 
 #rbenv
@@ -362,10 +368,10 @@ complete -F __start_kubectl k
 
 # Golang
 export PATH="/usr/local/go/bin:$PATH"
-export GOPATH="/Users/spkane/dev/go/path"
+export GOPATH="/Users/${USER}/dev/go/path"
 GOROOT=$(go env GOROOT)
 export GOROOT
-ln -sfh "${GOROOT}" /Users/spkane/dev/go/root 2> /dev/null
+ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
 sudo -n ln -sfh "${GOROOT}" /usr/local/go 2> /dev/null
 export GOBIN="$GOPATH/bin"
 export PATH="${GOBIN}:${PATH}"
@@ -391,5 +397,6 @@ for i in $(ls -C1 ${HOME}/.bashrc.personal*); do
     source "${i}"
 done
 
-export PATH="$PATH:/Users/spkane/.local/bin"
+export PATH="$PATH:/Users/${USER}/.local/bin"
+
 
