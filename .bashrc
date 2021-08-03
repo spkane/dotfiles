@@ -373,8 +373,8 @@ GOROOT=$(go env GOROOT)
 export GOROOT
 ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
 sudo -n ln -sfh "${GOROOT}" /usr/local/go 2> /dev/null
-export GOBIN="$GOPATH/bin"
-export PATH="${GOBIN}:${PATH}"
+export MYGOBIN="$GOPATH/bin"
+export PATH="${MYGOBIN}:${PATH}"
 export GOARCH=amd64
 export GOOS=darwin
 export GOPRIVATE="git.ask.com"
