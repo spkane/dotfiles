@@ -280,6 +280,7 @@ unalias sl 2> /dev/null
 #GPG
 GPG_TTY=$(tty)
 export GPG_TTY
+alias gpg-agent-reset="gpgconf --kill gpg-agent"
 
 #pipenv
 export PIPENV_MAX_DEPTH=4
