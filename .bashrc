@@ -21,8 +21,17 @@ export PATH="/usr/local/opt/node@10/bin:${PATH}"
 
 if [ -e "/usr/bin/uname" ]; then
   UNAME=$(/usr/bin/uname)
+  ARCH=$(/usr/bin/uname -m)
 else
   UNAME=$(/bin/uname)
+  ARCH=$(/bin/uname -m)
+fi
+
+UNAME2=$(echo "${UNAME}" | tr '[:upper:]' '[:lower:]')
+ARCH2="${ARCH}"
+
+if [ "${ARCH2} == "x86_64 ]; then
+  ARCH2 = "amd64"
 fi
 
 # check the window size after each command and, if necessary,
@@ -376,9 +385,9 @@ ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
 sudo -n ln -sfh "${GOROOT}" /usr/local/go 2> /dev/null
 export MYGOBIN="$GOPATH/bin"
 export PATH="${MYGOBIN}:${PATH}"
-export GOARCH=arm64
-export GOOS=darwin
 export GOPRIVATE="git.ask.com"
+export GOARCH="${ARCH2}"
+export GOOS="${UNAME2}
 #export CGO_ENABLED=1
 
 if command -v "dyff" &> /dev/null; then
