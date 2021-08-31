@@ -376,7 +376,7 @@ ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
 sudo -n ln -sfh "${GOROOT}" /usr/local/go 2> /dev/null
 export MYGOBIN="$GOPATH/bin"
 export PATH="${MYGOBIN}:${PATH}"
-export GOARCH=amd64
+export GOARCH=arm64
 export GOOS=darwin
 export GOPRIVATE="git.ask.com"
 #export CGO_ENABLED=1
