@@ -20,18 +20,18 @@ export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
 export PATH="/usr/local/opt/node@10/bin:${PATH}"
 
 if [ -e "/usr/bin/uname" ]; then
-  UNAME=$(/usr/bin/uname)
-  ARCH=$(/usr/bin/uname -m)
+  export UNAME=$(/usr/bin/uname)
+  exportARCH=$(/usr/bin/uname -m)
 else
-  UNAME=$(/bin/uname)
-  ARCH=$(/bin/uname -m)
+  export UNAME=$(/bin/uname)
+  export ARCH=$(/bin/uname -m)
 fi
 
-UNAME2=$(echo "${UNAME}" | tr '[:upper:]' '[:lower:]')
-ARCH2="${ARCH}"
+export UNAME2=$(echo "${UNAME}" | tr '[:upper:]' '[:lower:]')
+export ARCH2="${ARCH}"
 
 if [ "${ARCH2} == "x86_64 ]; then
-  ARCH2 = "amd64"
+  export ARCH2="amd64"
 fi
 
 # check the window size after each command and, if necessary,
@@ -387,7 +387,7 @@ export MYGOBIN="$GOPATH/bin"
 export PATH="${MYGOBIN}:${PATH}"
 export GOPRIVATE="git.ask.com"
 export GOARCH="${ARCH2}"
-export GOOS="${UNAME2}
+export GOOS="${UNAME2}"
 #export CGO_ENABLED=1
 
 if command -v "dyff" &> /dev/null; then
