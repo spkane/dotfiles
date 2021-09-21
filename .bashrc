@@ -380,7 +380,11 @@ complete -F __start_kubectl k
 # Golang
 export PATH="/usr/local/go/bin:$PATH"
 export GOPATH="/Users/${USER}/dev/go/path"
-GOROOT=$(go env GOROOT)
+if [[ -f /usr/local/bin/go ]]; then
+  GOROOT=$(/usr/local/bin/go env GOROOT)
+else
+  GOROOT=$(go env GOROOT)
+fi
 export GOROOT
 ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
 sudo -n ln -sfh "${GOROOT}" /usr/local/go 2> /dev/null
