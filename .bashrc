@@ -65,7 +65,14 @@ docs(){
   open "dash://${1}:${2}"
 }
 
-if [ "${UNAME}" != "Darwin" ]; then
+# Configure some macOS specific settings
+if [ "${UNAME}" == "Darwin" ]; then
+  # See: https://www.mackungfu.org/UsabilityhackClickdraganywhereinmacOSwindowstomovethem
+  defaults write -g NSWindowShouldDragOnGesture -bool true
+fi
+
+# Setup some macOS specific functions
+if [ "${UNAME}" == "Darwin" ]; then
   dockerstop(){
     test -z "$(docker ps -q 2>/dev/null)" && osascript -e 'quit app "Docker"'
   }
