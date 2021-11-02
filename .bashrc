@@ -21,7 +21,7 @@ export PATH="/usr/local/opt/node@10/bin:${PATH}"
 
 if [ -e "/usr/bin/uname" ]; then
   export UNAME=$(/usr/bin/uname)
-  exportARCH=$(/usr/bin/uname -m)
+  export ARCH=$(/usr/bin/uname -m)
 else
   export UNAME=$(/bin/uname)
   export ARCH=$(/bin/uname -m)
@@ -30,7 +30,7 @@ fi
 export UNAME2=$(echo "${UNAME}" | tr '[:upper:]' '[:lower:]')
 export ARCH2="${ARCH}"
 
-if [ "${ARCH2} == "x86_64 ]; then
+if [ "${ARCH2}" == "x86_64" ]; then
   export ARCH2="amd64"
 fi
 
@@ -187,8 +187,13 @@ unset MAILCHECK
 export SCM_CHECK=true
 
 if [ "${UNAME}" == "Darwin" ]; then
-  curlbin=$([ -d /usr/local/Cellar/curl ] && find /usr/local/Cellar/curl -name curl | grep bin | head -n 1)
-  alias curl="${curlbin}"
+  if [ "${ARCH2}" == "arm64" ]; then
+    curlbin=$([ -d /opt/homebrew/Cellar/curl ] && find /opt/homebrew/Cellar/curl -name curl | grep bin | head -n 1)
+    alias curl="${curlbin}"
+  else
+    curlbin=$([ -d /usr/local/Cellar/curl ] && find /usr/local/Cellar/curl -name curl | grep bin | head -n 1)
+    alias curl="${curlbin}"
+  fi
 fi
 
 # Kubernetes Yaml - Quickly
