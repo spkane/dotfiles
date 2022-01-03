@@ -204,8 +204,11 @@ alias aga="ag -f --hidden -a"
 alias agai="ag -f --hidden -a -i"
 alias aptsearch="apt-cache search"
 alias aptprovides="apt-file update; apt-file search"
-alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
 alias awsume=". awsume"
+alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
+alias ckbuild="nerdctl build --namespace k8s.io "
+alias cstop="colima stop"
+alias cstart="colima start --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes && kubectl config set current-context --namespace=default colima"
 alias dc="docker compose"
 alias docker-compose="docker compose"
 alias dm="docker-machine"
@@ -251,6 +254,7 @@ alias kr='kubectl run'
 alias ksysgpo='kubectl --namespace=kube-system get pod'
 alias kun='kubectl config unset current-context'
 alias kus='kustomize'
+alias kuse='kubectl config use-context "
 alias kutil='kubectl get nodes --no-headers | awk '\''{print $1}'\'' | xargs -I {} sh -c '\''echo {} ; kubectl describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo '\'''
 alias kw='watch -n 0.5 "kubectl config current-context; echo ""; kubectl config view | grep namespace; echo ""; kubectl get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"'
 alias ldo="lazydocker"
@@ -348,6 +352,10 @@ if [ "${UNAME}" != "Darwin" ]; then
   fi
 fi
 
+if command -v "kubectl-argo-rollouts" &> /dev/null; then
+  source <(kubectl-argo-rollouts completion bash)
+fi
+
 [ -f ~/.hub-completion.sh ] && source ~/.hub-completion.sh
 [ -f ~/bin/completion-ruby/completion-ruby-all ] && source ~/bin/completion-ruby/completion-ruby-all
 [ -f ~/.rbenv/shims/tmuxinator_completion ] && source ~/.rbenv/shims/tmuxinator_completion
@@ -367,7 +375,7 @@ for i in $(ls -C1 ${HOME}/.bash_completion.d); do
 done
 
 if command -v "pipenv" &> /dev/null; then
-  source <(pipenv --completion)
+  eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
 fi
 
 if command -v "golangci-lint" &> /dev/null; then
@@ -383,7 +391,11 @@ if command -v "register-python-argcomplete" &> /dev/null; then
 fi
 
 if command -v "velero" &> /dev/null; then
- source <(velero completion bash)
+  source <(velero completion bash)
+fi
+
+if command -v "limactl" &> /dev/null; then
+  source <(limactl completion bash)
 fi
 
 complete -C aws_completer aws
