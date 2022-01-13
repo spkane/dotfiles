@@ -133,7 +133,7 @@ else
   export PAGER="more"
 fi
 
-PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
+PATH="/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
 
 if [ "${UNAME}" == "SunOS" ]
 then
@@ -154,7 +154,7 @@ fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Do this after rbenv
-export PATH="/usr/local/bin:${PATH}"
+export PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:/usr/local/bin:${PATH}"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
