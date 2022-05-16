@@ -12,7 +12,13 @@ if [[ "${ITERM_PROFILE}" == "Class" ]]; then
 fi
 
 export TZ='America/Los_Angeles'
-export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+if [ "${UNAME}" == "Darwin" ]; then
+  if [ "${ARCH2}" == "arm64" ]; then
+    export VAGRANT_DEFAULT_PROVIDER='parallels'
+  else
+    export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+  fi
+fi
 
 # Don't forget to backup .inputrc (readline history searching)
 
@@ -104,8 +110,15 @@ if [ "${UNAME}" != "Darwin" ]; then
 fi
 
 #Libraries
-export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
-export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+if [ "${UNAME}" == "Darwin" ]; then
+    if [ "${ARCH2}" == "arm64" ]; then
+      export LDFLAGS="-L/opt/homebrew/opt/zlib/lib -L/opt/homebrew/opt/sqlite/lib"
+      export CPPFLAGS="-I/opt/homebrew/opt/zlib/include -I/opt/homebrew/opt/sqlite/include"
+    else
+      export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+      export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+    fi
+fi
 
 #OPSCODE Chef
 export OPSCODE_USER=spkane
@@ -124,10 +137,16 @@ export PIP_REQUIRE_VIRTUALENV=false
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 # misc
-export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
+if [ "${UNAME}" == "Darwin" ]; then
+  if [ "${ARCH2}" == "arm64" ]; then
+    export XML_CATALOG_FILES=/opt/homebrew/etc/xml/catalog
+  else
+    export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
+  fi
+fi
 export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig
 
-if [ -e "/usr/bin/less" ] || [ -e "/usr/local/bin/less"  ]; then
+if [ -e "/usr/bin/less" ] || [ -e "/usr/local/bin/less"  ] || [ -e "/opt/homebrew/bin/less"  ]; then
   export PAGER="less"
 else
   export PAGER="more"
@@ -141,20 +160,21 @@ then
 fi
 
 #Make git github aware
-if [ -e "/usr/local/bin/hub" ] || [ -e "${HOME}/bin/hub"  ]; then
+if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
   eval "$(hub alias -s)"
 fi
 
 #thefuck
-if [ -e "/usr/local/bin/thefuck" ]; then
+if [ -e "/usr/local/bin/thefuck" ] || [ -e "/opt/homebrew/bin/thefuck"  ]; then
   eval $(thefuck --alias u)
 fi
 
 #rbenv
+export RBENV_ROOT=${HOME}/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Do this after rbenv
-export PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:/usr/local/bin:${PATH}"
+export PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:${PATH}"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
@@ -205,7 +225,15 @@ alias agai="ag -f --hidden -a -i"
 alias aptsearch="apt-cache search"
 alias aptprovides="apt-file update; apt-file search"
 alias awsume=". awsume"
-alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
+if [ "${UNAME}" == "Darwin" ]; then
+  if [ "${ARCH2}" == "arm64" ]; then
+    alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/opt/homebrew/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /opt/homebrew/bin/bash"
+  else
+    alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
+  fi
+else
+  alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
+fi
 alias ckbuild="nerdctl build --namespace k8s.io "
 alias cstop="colima stop"
 alias cstart="colima start --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes && kubectl config set current-context --namespace=default colima"
@@ -313,12 +341,20 @@ fi
 
 #pyenv
 if [ "${UNAME}" != "Darwin" ]; then
-  alias pyenv="CFLAGS=\"-I$([ -f /usr/local/bin/brew ] && brew --prefix openssl)/include\" LDFLAGS=\"-L$([ -f /usr/local/bin/brew ] && brew --prefix openssl)/lib\" pyenv "
+    if [ "${ARCH2}" == "arm64" ]; then
+      alias pyenv="CFLAGS=\"-I$([ -f /opt/homebrew/bin/brew ] && brew --prefix openssl)/include\" LDFLAGS=\"-L$([ -f /opt/homebrew/bin/brew ] && brew --prefix openssl)/lib\" pyenv "
+    else
+      alias pyenv="CFLAGS=\"-I$([ -f /usr/local/bin/brew ] && brew --prefix openssl)/include\" LDFLAGS=\"-L$([ -f /usr/local/bin/brew ] && brew --prefix openssl)/lib\" pyenv "
+    fi
 fi
 
 #rbenv
 if [ "${UNAME}" != "Darwin" ]; then
-  alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /usr/local/bin/brew ] && brew --prefix openssl)\" rbenv "
+  if [ "${ARCH2}" == "arm64" ]; then
+    alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /opt/homebrew/bin/brew ] && brew --prefix openssl)\" rbenv "
+  else
+    alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /usr/local/bin/brew ] && brew --prefix openssl)\" rbenv "
+  fi
 fi
 
 #pianobar
@@ -347,6 +383,9 @@ fi
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source "/usr/local/etc/profile.d/bash_completion.sh"
 
 if [ "${UNAME}" != "Darwin" ]; then
+  if [ -f "$([ -f /opt/homebrew/bin/brew ] && brew --prefix)/etc/bash_c/usr/local/etc/profile.d/bashompletion.d/vagrant" ]; then
+    source "$([ -f /opt/homebrew/bin/brew ] && brew --prefix)/etc/bash_completion.d/vagrant"
+  fi
   if [ -f "$([ -f /usr/local/bin/brew ] && brew --prefix)/etc/bash_c/usr/local/etc/profile.d/bashompletion.d/vagrant" ]; then
     source "$([ -f /usr/local/bin/brew ] && brew --prefix)/etc/bash_completion.d/vagrant"
   fi
@@ -374,8 +413,11 @@ for i in $(ls -C1 ${HOME}/.bash_completion.d); do
     source "${HOME}/.bash_completion.d/${i}"
 done
 
-if command -v "pipenv" &> /dev/null; then
-  eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+# This appears to break incoming SCP in at least some circumstances...
+if [[ $- == *i* ]]; then
+  if command -v "pipenv" &> /dev/null; then
+    eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+  fi
 fi
 
 if command -v "golangci-lint" &> /dev/null; then
@@ -406,6 +448,8 @@ export PATH="/usr/local/go/bin:$PATH"
 export GOPATH="/Users/${USER}/dev/go/path"
 if [[ -f /usr/local/bin/go ]]; then
   GOROOT=$(/usr/local/bin/go env GOROOT)
+elif [[ -f /opt/homebrew/bin/go ]]; then
+  GOROOT=$(/opt/homebrew/bin/go env GOROOT)
 else
   GOROOT=$(go env GOROOT)
 fi
@@ -437,5 +481,3 @@ for i in $(ls -C1 ${HOME}/.bashrc.personal*); do
 done
 
 export PATH="$PATH:/Users/${USER}/.local/bin"
-
-
