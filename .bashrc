@@ -75,6 +75,7 @@ docs(){
 if [ "${UNAME}" == "Darwin" ]; then
   # See: https://www.mackungfu.org/UsabilityhackClickdraganywhereinmacOSwindowstomovethem
   defaults write -g NSWindowShouldDragOnGesture -bool true
+  export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
 fi
 
 # Setup some macOS specific functions
@@ -94,6 +95,20 @@ t() {
     cd "$fasdlist" || true
 }
 
+function solver() {
+  # See: https://github.com/javajon/katacoda-solver/releases
+  SOLVER_IMAGE=ghcr.io/javajon/solver:0.5.4
+  # Base source directory for challenges and scenarios
+  SCENARIOS_ROOT=~/dev/spkane/oreilly/katacoda-sean-kane
+  if [[ ! "$(pwd)" =~ ^$SCENARIOS_ROOT.* ]]; then
+    echo "Please run this from $SCENARIOS_ROOT or one of its scenario or challenge subdirectory."
+    return 1;
+  fi
+  SUBDIR=$(echo $(pwd) | ggrep -oP "^$SCENARIOS_ROOT\K.*")
+  docker run --rm -it -v "$SCENARIOS_ROOT":/workdir -w /workdir/$SUBDIR $SOLVER_IMAGE "$@";
+}
+
+
 # Timeout shell session after 4 days - survive a weekend
 export TMOUT=345600
 
@@ -106,7 +121,7 @@ export GREP_COLOR='1;30;43'
 
 # Don't override the default TMPDIR on MacOS
 if [ "${UNAME}" != "Darwin" ]; then
-    export TMPDIR="/tmp"
+  export TMPDIR="/tmp"
 fi
 
 #Libraries
@@ -129,12 +144,15 @@ export AWS_CREDENTIAL_FILE="${HOME}/.aws/credentials"
 
 #Vagrant
 export LOCAL_SSH_PRIVATE_KEY=~/.ssh/vagrant-id
-export AWS_SSH_PRIVATE_KEY=~/.ssh/
+#export AWS_SSH_PRIVATE_KEY=~/.ssh/
 
 #python
 # pip should only run if there is a virtualenv currently activated
 export PIP_REQUIRE_VIRTUALENV=false
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+
+#docker
+export BUILDKIT_COLORS="run=green:warning=yellow:error=red:cancel=cyan"
 
 # misc
 if [ "${UNAME}" == "Darwin" ]; then
@@ -152,11 +170,11 @@ else
   export PAGER="more"
 fi
 
-PATH="/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
+export PATH="/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
 
 if [ "${UNAME}" == "SunOS" ]
 then
-  PATH="$PATH:/usr/ucb"
+  export PATH="$PATH:/usr/ucb"
 fi
 
 #Make git github aware
@@ -234,19 +252,31 @@ if [ "${UNAME}" == "Darwin" ]; then
 else
   alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
 fi
+alias cidr="sipcalc"
+alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
+alias clr="clear && reset"
 alias ckbuild="nerdctl build --namespace k8s.io "
-alias cstop="colima stop"
-alias cstart="colima start --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes && kubectl config set current-context --namespace=default colima"
+alias cstop="colima stop; kubectl config unset current-context"
+alias cstart="colima start --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
 alias dc="docker compose"
 alias docker-compose="docker compose"
 alias dm="docker-machine"
+alias drup="docker run -d --rm --name drone-api -p 8080:8080 superorbital/drone-api && docker logs drone-api | grep -i token"
+alias drdown="docker rm -f drone-api"
 alias ekstoken='aws eks get-token --cluster-name $(kubectl config current-context | cut -d / -f 2) | jq .status.token'
 alias esnap="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save ./snapshot.db"
 alias erestore="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --data-dir /var/lib/etcd-backup snapshot restore ./snapshot.db"
 alias g="git"
+alias ga="git add"
+alias ga.="git add ."
+alias gac="git add . && git commit"
+alias gc="git commit"
 alias gdoc="godoc -http=127.0.0.1:6060"
 alias gpoh="git push origin HEAD"
 alias gpohf="git push -f origin HEAD"
+alias gs="git status"
+alias gd="git diff"
+alias gds="git diff --staged"
 alias h="history | grep -i"
 alias htop="sudo htop"
 alias ibrew='echo Run: /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
@@ -259,9 +289,8 @@ alias kconf="kubeconform -summary -strict"
 alias kcpualloc='kutil | grep % | awk '\''{print $1}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*20), "%\n" } }'\'''
 alias kcpyd='kubectl create pod -o yaml --dry-run=client'
 alias kctx="kubectx"
-alias kde='kubectl describe'
-alias kd='kubectl delete'
-alias kdf="kubectl delete -f"
+alias kd='kubectl describe'
+alias kdel='kubectl delete'
 alias ke='kubectl exec'
 alias kevents="kubectl get events -A --sort-by='{.lastTimestamp}'"
 alias kex="kubectl explain --recursive"
@@ -295,6 +324,7 @@ fi
 alias pe="pipenv"
 alias pes="pipenv shell"
 alias r="rg"
+alias rmc="rm -rf ${HOME}/class/* && rm -f ${HOME}/class/.???*"
 alias sshkg="ssh-keygen -R"
 alias tf='terraform'
 alias tfp="tf plan -no-color | grep -E '^[[:punct:]]|Plan'"
@@ -303,9 +333,9 @@ alias va="vagrant"
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 if command -v "keychain" &> /dev/null; then
-  function load_keys {
-    hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 0845757D65596830 7A54FF362955E1BE 45D6A71D79DD1F7D)"
-  }
+function load_keys {
+  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 id_ed25519_sean_so 0845757D65596830 7A54FF362955E1BE 45D6A71D79DD1F7D)"
+}
 fi
 
 #fasd
@@ -333,6 +363,7 @@ MANPATH="$(/usr/bin/manpath):${HOME}/man"
 export MANPATH
 
 export ANSIBLE_NOCOWS=1
+export ANSIBLE_VAULT_PASSWORD_FILE="./.vault_pass"
 
 # RVC
 if [ "${UNAME}" != "Darwin" ]; then
@@ -356,6 +387,9 @@ if [ "${UNAME}" != "Darwin" ]; then
     alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /usr/local/bin/brew ] && brew --prefix openssl)\" rbenv "
   fi
 fi
+
+#tfenv
+export TFENV_AUTO_INSTALL=true
 
 #pianobar
 if [ "${UNAME}" != "Darwin" ]; then
@@ -395,6 +429,10 @@ if command -v "kubectl-argo-rollouts" &> /dev/null; then
   source <(kubectl-argo-rollouts completion bash)
 fi
 
+if command -v "pack" &> /dev/null; then
+  . $(pack completion)
+fi
+
 [ -f ~/.hub-completion.sh ] && source ~/.hub-completion.sh
 [ -f ~/bin/completion-ruby/completion-ruby-all ] && source ~/bin/completion-ruby/completion-ruby-all
 [ -f ~/.rbenv/shims/tmuxinator_completion ] && source ~/.rbenv/shims/tmuxinator_completion
@@ -420,6 +458,10 @@ if [[ $- == *i* ]]; then
   fi
 fi
 
+if command -v "cludo" &> /dev/null; then
+    source <(cludo completion bash)
+fi
+
 if command -v "golangci-lint" &> /dev/null; then
   source <(golangci-lint completion bash)
 fi
@@ -440,6 +482,10 @@ if command -v "limactl" &> /dev/null; then
   source <(limactl completion bash)
 fi
 
+if command -v "op" &> /dev/null; then
+  source <(op completion bash)
+fi
+
 complete -C aws_completer aws
 complete -F __start_kubectl k
 
@@ -455,7 +501,13 @@ else
 fi
 export GOROOT
 ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
-sudo -n ln -sfh "${GOROOT}" /usr/local/go 2> /dev/null
+if $(cd /usr/local/go 2> /dev/null); then
+  echo
+else
+  echo "Prmopting for sudo password to create GOROOT link."
+  sudo rm -f /usr/local/go
+  sudo ln -sfh "${GOROOT}" /usr/local/go
+fi
 export MYGOBIN="$GOPATH/bin"
 export PATH="${MYGOBIN}:${PATH}"
 export GOPRIVATE="git.ask.com"
@@ -481,3 +533,40 @@ for i in $(ls -C1 ${HOME}/.bashrc.personal*); do
 done
 
 export PATH="$PATH:/Users/${USER}/.local/bin"
+
+# gcloud
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+
+
+# JINA_CLI_BEGIN
+
+## autocomplete
+_jina() {
+  COMPREPLY=()
+  local word="${COMP_WORDS[COMP_CWORD]}"
+
+  if [ "$COMP_CWORD" -eq 1 ]; then
+    COMPREPLY=( $(compgen -W "$(jina commands)" -- "$word") )
+  else
+    local words=("${COMP_WORDS[@]}")
+    unset words[0]
+    unset words[$COMP_CWORD]
+    local completions=$(jina completions "${words[@]}")
+    COMPREPLY=( $(compgen -W "$completions" -- "$word") )
+  fi
+}
+
+complete -F _jina jina
+
+# session-wise fix
+ulimit -n 4096
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+# default workspace for Executors
+export JINA_DEFAULT_WORKSPACE_BASE="${HOME}/.jina/executor-workspace"
+
+# JINA_CLI_END
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="$PATH:/Users/spkane/.rd/bin"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+

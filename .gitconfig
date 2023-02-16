@@ -7,11 +7,14 @@
 [include]
     path = ~/.gitconfig.personal
 
+[includeIf "gitdir:~/dev/beyond-aerospace/"]
+    path = ~/.gitconfig.personal.beyond-aerospace
+
 [includeIf "gitdir:~/dev/amg/"]
-  path = ~/.gitconfig.personal.amg
+    path = ~/.gitconfig.personal.amg
 
 [includeIf "gitdir:~/dev/bloomberg/"]
-  path = ~/.gitconfig.personal.bloomberg
+    path = ~/.gitconfig.personal.bloomberg
 
 [includeIf "gitdir:~/dev/m10/"]
     path = ~/.gitconfig.personal.m10
@@ -20,9 +23,9 @@
     path = ~/.gitconfig.personal.superorbital
 
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = /Users/spkane/.gitignore
     editor = code --wait --new-window
-    pager = less -r
+    pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
 
 [format]
     numbered = auto
@@ -56,6 +59,20 @@
     status = auto
     ui = auto
     interactive = auto
+
+[color "diff"]
+    commit = green
+    meta = yellow
+    frag = cyan
+    old = red
+    new = green
+    whitespace = red reverse
+
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold grey
+    newNormal = green bold
+    newHighlight = green bold grey
 
 [diff]
     tool = vsc
@@ -92,6 +109,7 @@
 
 [push]
     default = nothing
+	autoSetupRemote = true
 
 [gitreview]
     username = spkane
@@ -112,5 +130,9 @@
     insteadOf = http://github.com/
 
 [init]
-    templateDir = ~/.git-template
-    defaultBranch = main
+	templateDir = /Users/spkane/.git-template
+	defaultBranch = main
+
+[safe]
+	directory = /Users/spkane/dev/spkane/vde_vmnet
+	directory = /Users/spkane/dev/spkane/vde_vmnet/vde-2
