@@ -397,8 +397,8 @@ if [ "${UNAME}" != "Darwin" ]; then
 fi
 
 #Bash History
-export HISTSIZE=5000
-export HISTFILESIZE=5000
+export HISTSIZE=10000
+export HISTFILESIZE=100000
 export HISTCONTROL=ignoreboth:erasedups
 export HISTTIMEFORMAT="%d/%m/%y %T "
 export HISTIGNORE="ls:pwd:clear:reset:[bf]g:exit"
@@ -535,8 +535,9 @@ done
 export PATH="$PATH:/Users/${USER}/.local/bin"
 
 # gcloud
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-
+if [[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc ]]; then
+  source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+fi
 
 # JINA_CLI_BEGIN
 
