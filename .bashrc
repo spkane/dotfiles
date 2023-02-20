@@ -170,7 +170,7 @@ else
   export PAGER="more"
 fi
 
-export PATH="/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
+export PATH="/usr/local/bin:/usr/local/sbin:${PATH}:/sbin:/usr/sbin"
 
 if [ "${UNAME}" == "SunOS" ]
 then
@@ -502,7 +502,7 @@ fi
 export GOROOT
 ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
 if $(cd /usr/local/go 2> /dev/null); then
-  echo
+  PASS=TRUE # noop
 else
   echo "Prmopting for sudo password to create GOROOT link."
   sudo rm -f /usr/local/go
