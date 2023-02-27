@@ -356,6 +356,10 @@ GPG_TTY=$(tty)
 export GPG_TTY
 alias gpg-agent-reset="gpgconf --kill gpg-agent"
 
+#Terraform
+mkdir -p "${HOME}/.terraform-plugin-cache"
+export TF_PLUGIN_CACHE_DIR="${HOME}/.terraform-plugin-cache"
+
 #pipenv
 export PIPENV_MAX_DEPTH=4
 
