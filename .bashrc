@@ -135,6 +135,9 @@ if [ "${UNAME}" == "Darwin" ]; then
     fi
 fi
 
+#1Password
+export OP_BIOMETRIC_UNLOCK_ENABLED=true
+
 #OPSCODE Chef
 export OPSCODE_USER=spkane
 export ORGNAME=imaging
@@ -257,11 +260,11 @@ alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TER
 alias clr="clear && reset"
 alias ckbuild="nerdctl build --namespace k8s.io "
 alias cstop="colima stop; kubectl config unset current-context"
-alias cstart="colima start --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
+alias cstart="colima start --kubernetes-version v1.24.6+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
 alias dc="docker compose"
 alias docker-compose="docker compose"
 alias dm="docker-machine"
-alias drup="docker run -d --rm --name drone-api -p 8080:8080 superorbital/drone-api && docker logs drone-api | grep -i token"
+alias drup="docker pull superorbital/drone-api && docker run -d --rm --name drone-api -p 8080:8080 superorbital/drone-api && docker logs drone-api | grep -i token"
 alias drdown="docker rm -f drone-api"
 alias ekstoken='aws eks get-token --cluster-name $(kubectl config current-context | cut -d / -f 2) | jq .status.token'
 alias esnap="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save ./snapshot.db"
@@ -269,6 +272,8 @@ alias erestore="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --data-
 alias g="git"
 alias ga="git add"
 alias ga.="git add ."
+alias gat="git add :/"
+alias gtc="git add :/ && git commit"
 alias gac="git add . && git commit"
 alias gc="git commit"
 alias gdoc="godoc -http=127.0.0.1:6060"
