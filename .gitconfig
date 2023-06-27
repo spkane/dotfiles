@@ -7,6 +7,9 @@
 [include]
     path = ~/.gitconfig.personal
 
+[includeIf "gitdir:~/dev/aa-american/"]
+    path = ~/.gitconfig.personal.american-airlines
+
 [includeIf "gitdir:~/dev/beyond-aerospace/"]
     path = ~/.gitconfig.personal.beyond-aerospace
 
