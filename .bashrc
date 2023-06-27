@@ -2,6 +2,9 @@
 
 #set -xv
 
+# If not running interactively, don't do anything
+#[[ $- == *i* ]] || return
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
   source /etc/bashrc
@@ -180,6 +183,13 @@ then
   export PATH="$PATH:/usr/ucb"
 fi
 
+#rbenv
+export RBENV_ROOT=${HOME}/.rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Do this after rbenv
+export PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:${PATH}"
+
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
   eval "$(hub alias -s)"
@@ -189,13 +199,6 @@ fi
 if [ -e "/usr/local/bin/thefuck" ] || [ -e "/opt/homebrew/bin/thefuck"  ]; then
   eval $(thefuck --alias u)
 fi
-
-#rbenv
-export RBENV_ROOT=${HOME}/.rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# Do this after rbenv
-export PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:${PATH}"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
@@ -344,14 +347,20 @@ function load_keys {
 fi
 
 #fasd
-alias a='fasd -a'        # any
-alias d='fasd -d'        # directory
-alias f='fasd -f'        # file
-alias s='fasd -si'       # show / search / select
-alias sd='fasd -sid'     # interactive directory selection
-alias sf='fasd -sif'     # interactive file selection
-alias z='fasd_cd -d'     # cd, same functionality as j in autojump
-alias zz='fasd_cd -d -i' # cd with interactive selection
+#alias a='fasd -a'        # any
+#alias d='fasd -d'        # directory
+#alias f='fasd -f'        # file
+#alias s='fasd -si'       # show / search / select
+#alias sd='fasd -sid'     # interactive directory selection
+#alias sf='fasd -sif'     # interactive file selection
+#alias z='fasd_cd -d'     # cd, same functionality as j in autojump
+#alias zz='fasd_cd -d -i' # cd with interactive selection
+
+# z.lua
+alias zz='z -c'      # restrict matches to subdirs of $PWD
+alias zi='z -i'      # cd with interactive selection
+alias zf='z -I'      # use fzf to select in multiple matches
+alias zb='z -b'      # quickly cd to the parent directory
 
 # unalias
 unalias sl 2> /dev/null
@@ -526,6 +535,10 @@ export GOOS="${UNAME2}"
 
 if command -v "dyff" &> /dev/null; then
   export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
+fi
+
+if [[ -e /opt/homebrew/opt/z.lua ]]; then
+  eval "$(lua /opt/homebrew/opt/z.lua --init bash enhanced once echo fzf)"
 fi
 
 if command -v "fasd" &> /dev/null; then

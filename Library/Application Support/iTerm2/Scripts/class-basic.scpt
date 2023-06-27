@@ -6,7 +6,7 @@ tell application "iTerm"
   end tell
   tell first session of first tab of current window
     set name to "Primary"
-    write text "sleep 4 && kubectl config unset current-context && cd ~/class && code . && clear && reset"
+    write text "sleep 4 && colima stop && kubectl config unset current-context && cd ~/class && code . && clear && reset"
   end tell
   tell first session of second tab of current window
     set name to "Secondary"

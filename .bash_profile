@@ -2,12 +2,12 @@
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# If not running interactively, don't do anything
+[[ $- == *i* ]] || return
+
 if [ -f ~/.bashrc ]; then
    source ~/.bashrc
 fi
-
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
 
 if [ -e "/usr/bin/uname" ]; then
   export UNAME=$(/usr/bin/uname)

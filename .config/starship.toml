@@ -7,14 +7,18 @@ format = """\
     $username\
     $hostname\
     $directory\
-    $kubernetes\
     $aws\
+    $gcloud\
+    $azure\
+    $kubernetes\
     $git_branch\
     $git_commit\
     $git_state\
     $git_status\
     $hg_branch\
+    $docker_context\
     $package\
+    $helm\
     $dotnet\
     $golang\
     $java\
@@ -34,10 +38,8 @@ format = """\
     $character\
     """
 
-# Timeout for starship to scan files (in milliseconds).
-scan_timeout = 30
-
-# Timeout for commands executed by starship (in milliseconds).
+# Wait 30 milliseconds for starship to check files under the current directory.
+scan_timeout    = 30
 command_timeout = 1000
 
 [aws]
@@ -51,6 +53,18 @@ us-east-2 = 'use2'
 us-west-1 = 'usw1'
 us-west-2 = 'usw2'
 
+[aws.profile_aliases]
+#CompanyGroupFrobozzOnCallAccess = 'Frobozz'
+
+[azure]
+disabled = false
+format = '[$symbol($subscription)]($style) '
+symbol = 'ⓩ '
+style = "blue bold"
+
+[azure.subscription_aliases]
+# very-long-subscription-name = 'vlsn'
+
 [directory]
 truncation_length = 3
 
@@ -58,6 +72,21 @@ truncation_length = 3
 variable = 'PROMPT_ID'
 format = '[$env_value]($style)'
 default = '🔴'
+
+[gcloud]
+format = '[$symbol$active]($style) '
+style  = 'bold yellow'
+symbol = '️🇬️ '
+
+[gcloud.project_aliases]
+#very-long-project-name = 'vlpn'
+
+[gcloud.region_aliases]
+us-central1 = 'uc1'
+asia-northeast1 = 'an1'
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
 
 [golang]
 format = '[$symbol$version]($style)'
@@ -75,6 +104,13 @@ style = 'green'
 disabled = false
 
 [kubernetes.context_aliases]
+'arn:aws:eks:us-west-2:347664157153:cluster/dev-supercluster' = 'dev-supercluster'
+'arn:aws:eks:us-west-2:448715137137:cluster/drone' = 'drone'
+'arn:aws:eks:ap-southeast-1:575274092226:cluster/client-poc-k8s' = 'client-poc'
+
+[kubernetes.user_aliases]
+#'dev.local.cluster.k8s' = 'dev'
+#'root/.*' = 'root'
 
 [python]
 format = '[${symbol}${pyenv_prefix}${version}($virtualenv)]($style) '
@@ -85,3 +121,4 @@ format = '[$symbol$version]($style) '
 
 [username]
 disabled = true
+
