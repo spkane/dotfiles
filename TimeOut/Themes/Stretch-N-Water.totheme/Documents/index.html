@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Remember to Stretch and Drink Water!</title>
+
+<script>
+(() => {
+  const hideLoading = () => {
+    const element = document.getElementById('loading');
+    element.className = 'hidden';
+  };
+
+  const showPhoto = () => {
+    const element = document.getElementById('photo');
+    element.className = '';
+  };
+
+  const showError = (message) => {
+    hideLoading();
+    const element = document.getElementById('error');
+    element.className = '';
+    element.innerText = message;
+  };
+
+  const fetchPhoto = async () => {
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
+    const apiURL = `https://source.unsplash.com/random/${windowWidth}x${windowHeight}/?nature`;
+
+    try {
+      //const response = await window.fetch(apiUrl, { redirect: 'follow'});
+      //const photo = await response.blob();
+
+      // Preload image
+      const currentImage = new Image(windowWidth, windowHeight);
+      currentImage.src = apiURL;
+
+      const imageElement = document.getElementById('photo');
+      const creditElement = document.getElementById('credit');
+      const messageElement = document.getElementById('message');
+      imageElement.style.backgroundColor = messageElement.style.color = 'black';
+      imageElement.style.backgroundImage = `url('${apiURL}')`;
+      //imageElement.setAttribute('title', photo.alt);
+      //creditElement.innerHTML = photo.credit;
+
+      hideLoading();
+      showPhoto();
+    } catch (error) {
+      showError(error);
+    }
+  };
+
+  window.addEventListener('load', () => {
+    fetchPhoto();
+  });
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap" rel="stylesheet">
+
+<style type="text/css">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+#main
+{
+  width: 100%;
+  font-size: 3rem;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#loading {
+  flex: 1;
+  text-align: center;
+}
+#photo {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#message {
+  font-size: 8vh;
+  text-align: center;
+  font-weight: 900;
+  position: absolute;
+  width: 100%;
+  top: 30vh;
+  -webkit-text-stroke: 2px black;
+  mix-blend-mode: hard-light;
+}
+#credit {
+  position: absolute;
+  padding: 1vh 3vw;
+  width: 100%;
+  bottom: 0;
+  text-align: right;
+  background: white;
+  font-size: 2vh;
+}
+#credit img {
+  max-height: 4vh;
+  vertical-align: middle;
+}
+.hidden {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+  <div id="main">
+    <span id="loading">Loading...</span>
+    <span id="error" class="hidden"></span>
+    <div id="photo" class="hidden" title=""></div>
+    <div id="message">Stretch & Drink Water</div>
+    <div id="credit"></div>
+  </div>
+
+</body>
+</html>

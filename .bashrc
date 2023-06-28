@@ -537,8 +537,8 @@ if command -v "dyff" &> /dev/null; then
   export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
 fi
 
-if [[ -e /opt/homebrew/opt/z.lua ]]; then
-  eval "$(lua /opt/homebrew/opt/z.lua --init bash enhanced once echo fzf)"
+if [[ -e /opt/homebrew/opt/z.lua/share/z.lua/z.lua ]]; then
+  eval "$(lua /opt/homebrew/opt/z.lua/share/z.lua/z.lua --init bash enhanced once echo fzf)"
 fi
 
 if command -v "fasd" &> /dev/null; then

@@ -1,0 +1,19 @@
+{
+  "author": {
+    "name" : "Elanor Riley (Customized by Sean P. Kane)",
+    "email" : "elanor@elanorriley.com",
+    "url" : "https://elanor.dev/"
+  },
+  "credits": {
+    "url": "https://unsplash.com",
+    "name": "unsplash.com"
+  },
+  "comments" : "Remind yourself to stretch and drink water with these stock images from Unsplash",
+  "rootDocument" : "index.html",
+  "type" : "html5",
+  "created" : "2021-01-15",
+  "identifier" : "StretchDrinkWaterReminder",
+  "version" : 1,
+  "modified" : "2023-05-10",
+  "name" : "Stretch and Drink Water Reminder"
+}
