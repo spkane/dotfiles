@@ -1,0 +1,37 @@
+{
+    "settings": {
+        "enable_new_version_notification": false
+    },
+    "rules": [
+        {
+            "name": "Pinned Mail",
+            "detection": "CONTAINS",
+            "url_fragment": "mail.google.com",
+            "tab": {
+                "icon": null,
+                "muted": false,
+                "pinned": true,
+                "protected": false,
+                "title": "@0 | $0",
+                "title_matcher": "[a-z0-9.]*@[a-z0-9.]+",
+                "unique": false,
+                "url_matcher": "https://([a-z]*)"
+            }
+        },
+        {
+            "name": "Pinned Calendar",
+            "detection": "CONTAINS",
+            "url_fragment": "calendar.google.com",
+            "tab": {
+                "icon": null,
+                "muted": false,
+                "pinned": true,
+                "protected": false,
+                "title": "@0 | $0",
+                "title_matcher": "[a-zA-Z0-9.]*",
+                "unique": false,
+                "url_matcher": "https://([a-z]*)"
+            }
+        }
+    ]
+}
