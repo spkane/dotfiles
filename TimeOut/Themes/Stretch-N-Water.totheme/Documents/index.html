@@ -26,23 +26,24 @@
   const fetchPhoto = async () => {
     let windowWidth = window.innerWidth;
     let windowHeight = window.innerHeight;
-    const apiURL = `https://source.unsplash.com/random/${windowWidth}x${windowHeight}/?nature`;
+    let clientId = "REDACTED";
+    const apiUrl = `https://api.unsplash.com/photos/random?query=nature&orientation=landscape&w=${windowWidth}&h=${windowHeight}&crop=true&client_id=${clientId}`;
 
     try {
-      //const response = await window.fetch(apiUrl, { redirect: 'follow'});
-      //const photo = await response.blob();
+      const response = await window.fetch(apiUrl);
+      const photo = await response.json();
 
       // Preload image
       const currentImage = new Image(windowWidth, windowHeight);
-      currentImage.src = apiURL;
+      currentImage.src = photo.urls.raw;
 
       const imageElement = document.getElementById('photo');
       const creditElement = document.getElementById('credit');
       const messageElement = document.getElementById('message');
-      imageElement.style.backgroundColor = messageElement.style.color = 'black';
-      imageElement.style.backgroundImage = `url('${apiURL}')`;
-      //imageElement.setAttribute('title', photo.alt);
-      //creditElement.innerHTML = photo.credit;
+      imageElement.style.backgroundColor = messageElement.style.color = "black";
+      imageElement.style.backgroundImage = `url('${photo.urls.raw}')`;
+      imageElement.setAttribute('title', photo.alt);
+      creditElement.innerHTML = photo.credit;
 
       hideLoading();
       showPhoto();
@@ -65,6 +66,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
 }
 a {
   text-decoration: none;
@@ -101,6 +103,7 @@ body {
 #message {
   font-size: 8vh;
   text-align: center;
+  text-shadow: 0px 0px 50px #FFFFFF;
   font-weight: 900;
   position: absolute;
   width: 100%;
