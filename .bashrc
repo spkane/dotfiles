@@ -188,7 +188,7 @@ export RBENV_ROOT=${HOME}/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Do this after rbenv
-export PATH="${HOME}/bin:${HOME}/.krew/bin:/opt/homebrew/bin:${PATH}"
+export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:${PATH}"
 
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
@@ -239,6 +239,9 @@ if [ "${UNAME}" == "Darwin" ]; then
     alias curl="${curlbin}"
   fi
 fi
+
+# Grafana Loki
+export LOKI_ADDR=http://localhost:3100
 
 # Kubernetes Yaml - Quickly
 export dr="--dry-run=client -o yaml"
@@ -433,6 +436,7 @@ fi
 (readonly | cut -d= -f1 | cut -d' ' -f3 | grep -q BASH_COMPLETION_COMPAT_DIR) || export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source "/usr/local/etc/profile.d/bash_completion.sh"
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 if [ "${UNAME}" != "Darwin" ]; then
   if [ -f "$([ -f /opt/homebrew/bin/brew ] && brew --prefix)/etc/bash_c/usr/local/etc/profile.d/bashompletion.d/vagrant" ]; then
@@ -474,6 +478,10 @@ if [[ $- == *i* ]]; then
   if command -v "pipenv" &> /dev/null; then
     eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
   fi
+fi
+
+if command -v "logcli" &> /dev/null; then
+  eval "$(logcli --completion-script-bash)"
 fi
 
 if command -v "cludo" &> /dev/null; then
@@ -559,6 +567,8 @@ export PATH="$PATH:/Users/${USER}/.local/bin"
 # gcloud
 if [[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc ]]; then
   source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+elif [[ -f /opt/homebrew/share/google-cloud-sdk/path.bash.inc ]]; then
+  source "/opt/homebrew/share/google-cloud-sdk/path.bash.inc"
 fi
 
 # JINA_CLI_BEGIN
