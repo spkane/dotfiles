@@ -266,7 +266,7 @@ alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TER
 alias clr="clear && reset"
 alias ckbuild="nerdctl build --namespace k8s.io "
 alias cstop="colima stop; kubectl config unset current-context"
-alias cstart="colima start --kubernetes-version v1.24.6+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
+alias cstart="colima start --kubernetes-version v1.25.11+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
 alias dc="docker compose"
 alias docker-compose="docker compose"
 alias dm="docker-machine"
