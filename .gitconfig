@@ -6,140 +6,144 @@
   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 
 [commit]
-    gpgsign = false
+  gpgsign = false
 
 [include]
-    path = ~/.gitconfig.personal
+  path = ~/.gitconfig.personal
 
 [includeIf "gitdir:~/dev/aa-american/"]
-    path = ~/.gitconfig.personal.american-airlines
+  path = ~/.gitconfig.personal.american-airlines
 
 [includeIf "gitdir:~/dev/beyond-aerospace/"]
-    path = ~/.gitconfig.personal.beyond-aerospace
+  path = ~/.gitconfig.personal.beyond-aerospace
 
 [includeIf "gitdir:~/dev/amg/"]
-    path = ~/.gitconfig.personal.amg
+  path = ~/.gitconfig.personal.amg
 
 [includeIf "gitdir:~/dev/bloomberg/"]
-    path = ~/.gitconfig.personal.bloomberg
+  path = ~/.gitconfig.personal.bloomberg
 
 [includeIf "gitdir:~/dev/m10/"]
-    path = ~/.gitconfig.personal.m10
+  path = ~/.gitconfig.personal.m10
 
 [includeIf "gitdir:~/dev/superorbital/"]
-    path = ~/.gitconfig.personal.superorbital
+  path = ~/.gitconfig.personal.superorbital
 
 [core]
-    excludesfile = /Users/spkane/.gitignore
-    editor = code --wait --new-window
-    pager = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
+  excludesfile = /Users/spkane/.gitignore
+  editor = code --wait --new-window
+  pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
 
 [format]
-    numbered = auto
+  numbered = auto
 
 [gc]
-    packrefs = 0
+  packrefs = 0
 
 [sendemail]
-    suppressfrom = true
+  suppressfrom = true
 
 [alias]
-    ci = commit
-    co = checkout
-    co-pr = !sh -c 'git fetch upstream pull/$1/head:pr/$1 && git checkout pr/$1' -
-    fe = fetch
-    st = status
-    br = branch
-    dt = difftool
-    mt = mergetool
-    df  = diff --color-words
-    sh = show --color-words
-    a  = add
-    l  = log
-    lol = log --pretty=oneline --abbrev-commit --graph --decorate
-    lg = log --pretty=format:'%C(yellow)%h%C(reset) %C(blue)%an%C(reset) %C(cyan)%cr%C(reset) %s %C(green)%d%C(reset)' --graph --date-order
-    clobber = !git stash && git reset --hard && git clean -fd
+  ci = commit
+  co = checkout
+  co-pr = !sh -c 'git fetch upstream pull/$1/head:pr/$1 && git checkout pr/$1' -
+  fe = fetch
+  st = status
+  br = branch
+  dt = difftool
+  mt = mergetool
+  df  = diff --color-words
+  sh = show --color-words
+  a  = add
+  l  = log
+  lol = log --pretty=oneline --abbrev-commit --graph --decorate
+  lg = log --pretty=format:'%C(yellow)%h%C(reset) %C(blue)%an%C(reset) %C(cyan)%cr%C(reset) %s %C(green)%d%C(reset)' --graph --date-order
+  clobber = !git stash && git reset --hard && git clean -fd
 
 [color]
-    branch = auto
-    diff = auto
-    status = auto
-    ui = auto
-    interactive = auto
+  branch = auto
+  diff = auto
+  status = auto
+  ui = auto
+  interactive = auto
 
 [color "diff"]
-    commit = green
-    meta = yellow
-    frag = cyan
-    old = red
-    new = green
-    whitespace = red reverse
+  commit = green
+  meta = yellow
+  frag = cyan
+  old = red
+  new = green
+  whitespace = red reverse
 
 [color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold grey
-    newNormal = green bold
-    newHighlight = green bold grey
+  oldNormal = red bold
+  oldHighlight = red bold grey
+  newNormal = green bold
+  newHighlight = green bold grey
 
 [diff]
-    tool = vsc
+  tool = vsc
 
 [difftool "vsc"]
-    cmd = code --wait --new-window --diff $LOCAL $REMOTE
+  cmd = code --wait --new-window --diff $LOCAL $REMOTE
 
 [difftool]
-    prompt = false
+  prompt = false
 
 [merge]
-    log = true
-    stat = true
-    tool = vsc
+  log = true
+  stat = true
+  tool = vsc
 
 [mergetool "vsc"]
-    cmd = code --wait --new-window $MERGED
+  cmd = code --wait --new-window $MERGED
 
 [mergetool]
-    keepBackup = true
+  keepBackup = true
 
 [branch]
-    autoseupmerge = always
-    autosetuprebase = always
+  autoseupmerge = always
+  autosetuprebase = always
+
+[branch "main"]
+    mergeoptions = --ff-only
 
 [branch "master"]
-    mergeoptions = --ff-only
+  mergeoptions = --ff-only
 
 [branch "staging"]
-    mergeoptions = --ff-only
+  mergeoptions = --ff-only
 
 [branch "production"]
-    mergeoptions = --ff-only
+  mergeoptions = --ff-only
 
 [push]
-    default = nothing
-	autoSetupRemote = true
+  default = nothing
+  autoSetupRemote = true
 
 [gitreview]
-    username = spkane
+  username = spkane
 
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    required = true
-    process = git-lfs filter-process
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  required = true
+  process = git-lfs filter-process
 
 [hub]
-    host = github.com
+  host = github.com
 
 [url "git@github.com:"]
-    insteadOf = https://github.com/
+  insteadOf = https://github.com/
 
 [url "git@github.com:"]
-    insteadOf = http://github.com/
+  insteadOf = http://github.com/
 
 [init]
-	templateDir = /Users/spkane/.git-template
-	defaultBranch = main
+  templateDir = /Users/spkane/.git-template
+  defaultBranch = main
 
 [safe]
-	directory = /Users/spkane/dev/spkane/vde_vmnet
-	directory = /Users/spkane/dev/spkane/vde_vmnet/vde-2
+  directory = /Users/spkane/dev/spkane/vde_vmnet
+  directory = /Users/spkane/dev/spkane/vde_vmnet/vde-2
+

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
+
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # If not running interactively, don't do anything
@@ -55,3 +58,7 @@ complete -C /Users/spkane/dev/superorbital/infrastructure/bin/Darwin/x86_64/terr
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)PATH="/opt/podman/bin:$PATH"
 export PATH="$PATH:/opt/podman/bin"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
+

@@ -2,6 +2,9 @@
 
 #set -xv
 
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/bashrc.pre.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.pre.bash"
+
 # If not running interactively, don't do anything
 #[[ $- == *i* ]] || return
 
@@ -170,7 +173,9 @@ if [ "${UNAME}" == "Darwin" ]; then
 fi
 export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig
 
-if [ -e "/usr/bin/less" ] || [ -e "/usr/local/bin/less"  ] || [ -e "/opt/homebrew/bin/less"  ]; then
+if [ -e "/usr/bin/bat" ] || [ -e "/usr/local/bin/bat"  ] || [ -e "/opt/homebrew/bin/bat"  ]; then
+  export PAGER="bat"
+elif [ -e "/usr/bin/less" ] || [ -e "/usr/local/bin/less"  ] || [ -e "/opt/homebrew/bin/less"  ]; then
   export PAGER="less"
 else
   export PAGER="more"
@@ -327,6 +332,7 @@ alias kutil='kubectl get nodes --no-headers | awk '\''{print $1}'\'' | xargs -I 
 alias kw='watch -n 0.5 "kubectl config current-context; echo ""; kubectl config view | grep namespace; echo ""; kubectl get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"'
 alias ldo="lazydocker"
 alias lg="lazygit"
+alias ls="exa"
 alias mdcat="pandoc -f markdown -t plain"
 alias mtr="sudo mtr"
 if command -v "op" &> /dev/null; then
@@ -469,7 +475,7 @@ fi
 export FZF_DEFAULT_OPS="--extended"
 
 mkdir -p "${HOME}/.bash_completion.d"
-for i in $(ls -C1 ${HOME}/.bash_completion.d); do
+for i in $(\ls -C1 ${HOME}/.bash_completion.d); do
     source "${HOME}/.bash_completion.d/${i}"
 done
 
@@ -545,6 +551,10 @@ if command -v "dyff" &> /dev/null; then
   export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
 fi
 
+if [[ -e /usr/local/share/z.lua/z.lua ]]; then
+  eval "$(lua /usr/local/share/z.lua/z.lua --init bash enhanced once echo fzf)"
+fi
+
 if [[ -e /opt/homebrew/opt/z.lua/share/z.lua/z.lua ]]; then
   eval "$(lua /opt/homebrew/opt/z.lua/share/z.lua/z.lua --init bash enhanced once echo fzf)"
 fi
@@ -558,7 +568,7 @@ if command -v "direnv" &> /dev/null; then
 fi
 
 touch "${HOME}/.bashrc.personal"
-for i in $(ls -C1 ${HOME}/.bashrc.personal*); do
+for i in $(\ls -C1 ${HOME}/.bashrc.personal*); do
     source "${i}"
 done
 
@@ -602,4 +612,7 @@ export JINA_DEFAULT_WORKSPACE_BASE="${HOME}/.jina/executor-workspace"
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"
 
