@@ -269,7 +269,9 @@ fi
 alias cidr="sipcalc"
 alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/usr/local/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /usr/local/bin/bash"
 alias clr="clear && reset"
-alias clrp="unset $(compgen -v | grep 'PROXY$')"
+clrp() {
+  unset $(compgen -v | grep -i "PROXY$")
+}
 alias ckbuild="nerdctl build --namespace k8s.io "
 alias cstop="colima stop; kubectl config unset current-context"
 alias cstart="colima start --kubernetes-version v1.25.11+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
