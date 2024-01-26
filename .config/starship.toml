@@ -65,6 +65,9 @@ style = "blue bold"
 [azure.subscription_aliases]
 # very-long-subscription-name = 'vlsn'
 
+[cmd_duration]
+format = ' took [$duration]($style) '
+
 [directory]
 truncation_length = 3
 

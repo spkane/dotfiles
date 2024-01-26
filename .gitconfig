@@ -140,7 +140,7 @@
   insteadOf = http://github.com/
 
 [init]
-  templateDir = /Users/spkane/.git-template
+	templateDir = /Users/spkane/.git-template
   defaultBranch = main
 
 [safe]

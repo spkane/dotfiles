@@ -193,7 +193,7 @@ export RBENV_ROOT=${HOME}/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Do this after rbenv
-export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:${PATH}"
+export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:${HOME}/.tea/.local/bin:${HOME}/.local/bin:${PATH}"
 
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
@@ -619,3 +619,5 @@ export PATH="$PATH:/Users/spkane/.rd/bin"
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"
 
+
+test -d "$HOME/.tea" && source /dev/stdin <<<"$("$HOME/.tea/tea.xyz/v*/bin/tea" --magic=bash --silent)"
