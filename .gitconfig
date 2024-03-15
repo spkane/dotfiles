@@ -8,31 +8,10 @@
 [commit]
   gpgsign = false
 
-[include]
-  path = ~/.gitconfig.personal
-
-[includeIf "gitdir:~/dev/aa-american/"]
-  path = ~/.gitconfig.personal.american-airlines
-
-[includeIf "gitdir:~/dev/beyond-aerospace/"]
-  path = ~/.gitconfig.personal.beyond-aerospace
-
-[includeIf "gitdir:~/dev/amg/"]
-  path = ~/.gitconfig.personal.amg
-
-[includeIf "gitdir:~/dev/bloomberg/"]
-  path = ~/.gitconfig.personal.bloomberg
-
-[includeIf "gitdir:~/dev/m10/"]
-  path = ~/.gitconfig.personal.m10
-
-[includeIf "gitdir:~/dev/superorbital/"]
-  path = ~/.gitconfig.personal.superorbital
-
 [core]
   excludesfile = /Users/spkane/.gitignore
   editor = code --wait --new-window
-  pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
+  pager = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
 
 [format]
   numbered = auto
@@ -82,9 +61,9 @@
   newHighlight = green bold grey
 
 [diff]
-  tool = vsc
+  tool = default-difftool
 
-[difftool "vsc"]
+[difftool "default-difftool"]
   cmd = code --wait --new-window --diff $LOCAL $REMOTE
 
 [difftool]
@@ -96,7 +75,7 @@
   tool = vsc
 
 [mergetool "vsc"]
-  cmd = code --wait --new-window $MERGED
+  cmd = code --wait --new-window --merge $REMOTE $LOCAL $BASE $MERGED
 
 [mergetool]
   keepBackup = true
@@ -140,10 +119,37 @@
   insteadOf = http://github.com/
 
 [init]
-	templateDir = /Users/spkane/.git-template
+  templateDir = /Users/spkane/.git-template
   defaultBranch = main
 
 [safe]
   directory = /Users/spkane/dev/spkane/vde_vmnet
   directory = /Users/spkane/dev/spkane/vde_vmnet/vde-2
 
+[protocol "file"]
+  allow = always
+
+# Includes should be at the bottom
+[include]
+  path = ~/.gitconfig.personal
+
+[includeIf "gitdir/i:~/dev/term-finance/"]
+  path = ~/.gitconfig.personal.term-finance
+
+[includeIf "gitdir/i:~/dev/aa-american/"]
+  path = ~/.gitconfig.personal.american-airlines
+
+[includeIf "gitdir/i:~/dev/beyond-aerospace/"]
+  path = ~/.gitconfig.personal.beyond-aerospace
+
+[includeIf "gitdir/i:~/dev/amg/"]
+  path = ~/.gitconfig.personal.amg
+
+[includeIf "gitdir/i:~/dev/bloomberg/"]
+  path = ~/.gitconfig.personal.bloomberg
+
+[includeIf "gitdir/i:~/dev/m10/"]
+  path = ~/.gitconfig.personal.m10
+
+[includeIf "gitdir/i:~/dev/superorbital/"]
+  path = ~/.gitconfig.personal.superorbital

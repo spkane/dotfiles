@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.pre.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.pre.bash"
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/bash_profile.pre.bash"
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
@@ -9,7 +9,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 [[ $- == *i* ]] || return
 
 if [ -f ~/.bashrc ]; then
-   source ~/.bashrc
+  source ~/.bashrc
 fi
 
 if [ -e "/usr/bin/uname" ]; then
@@ -31,8 +31,6 @@ gpip(){
   PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
 if command -v "dadjoke" &> /dev/null; then
   echo
   dadjoke random 2> /dev/null
@@ -53,12 +51,52 @@ export PATH="$PATH:/Users/spkane/.local/bin"
 #complete -C /usr/local/Cellar/tfenv/3.0.0/versions/1.2.9/terraform terraform
 complete -C /Users/spkane/dev/superorbital/infrastructure/bin/Darwin/x86_64/terraform terraform
 
-
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)PATH="/opt/podman/bin:$PATH"
 export PATH="$PATH:/opt/podman/bin"
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/bash_profile.post.bash" ]] && builtin source "$HOME/.fig/shell/bash_profile.post.bash"
+if type brew &>/dev/null
+then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
+  then
+    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+  else
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
+    do
+      [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+    done
+  fi
+fi
 
+function blastoff(){
+  if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
+    echo -n "$(iterm2_prompt_mark)"
+ fi
+}
+
+export starship_precmd_user_func="blastoff"
+
+_convert_pc_to_array() {
+  mapfile -t _PROMPT_COMMAND <<<"${PROMPT_COMMAND}"
+  unset PROMPT_COMMAND
+  PROMPT_COMMAND=("${_PROMPT_COMMAND[@]}")
+}
+
+declare -ga preexec_functions=()
+declare -ga precmd_functions=()
+
+if [ -x $HOMEBREW_PREFIX/bin/starship ]; then
+  eval "$(starship init bash)"
+  _convert_pc_to_array
+fi
+
+test -e "/opt/homebrew/opt/asdf/libexec/asdf.sh" && source /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/bash_profile.post.bash"

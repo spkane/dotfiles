@@ -8,8 +8,6 @@ format = """\
     $hostname\
     $directory\
     $aws\
-    $gcloud\
-    $azure\
     $kubernetes\
     $git_branch\
     $git_commit\
@@ -43,7 +41,7 @@ scan_timeout    = 30
 command_timeout = 1000
 
 [aws]
-format = '[$symbol $profile($region)]($style) '
+format = '[$symbol $profile\($region\)]($style) '
 style = '#668cff'
 symbol = '🅰'
 
@@ -66,7 +64,13 @@ style = "blue bold"
 # very-long-subscription-name = 'vlsn'
 
 [cmd_duration]
+<<<<<<< HEAD
 format = ' took [$duration]($style) '
+=======
+min_time = 0
+show_milliseconds = true
+format = "[$duration ]($style)"
+>>>>>>> b9a1c58 (Updates (work))
 
 [directory]
 truncation_length = 3
@@ -101,19 +105,24 @@ trim_at = '.'
 disabled = false
 
 [kubernetes]
-format = '[$symbol$context\($namespace\)]($style) '
+format = '[$symbol$user@$context\($namespace\)]($style) '
 symbol = '⛵'
 style = 'green'
 disabled = false
 
-[kubernetes.context_aliases]
-'arn:aws:eks:us-west-2:347664157153:cluster/dev-supercluster' = 'dev-supercluster'
-'arn:aws:eks:us-west-2:448715137137:cluster/drone' = 'drone'
-'arn:aws:eks:ap-southeast-1:575274092226:cluster/client-poc-k8s' = 'client-poc'
+[[kubernetes.contexts]]
+context_pattern = ".*/*term-finance-k8s-mainnet"
+user_pattern = ".*/*term-finance-k8s-mainnet"
+style = "bold red"
+context_alias = "tf-mainnet"
+user_alias = "admin"
 
-[kubernetes.user_aliases]
-#'dev.local.cluster.k8s' = 'dev'
-#'root/.*' = 'root'
+[[kubernetes.contexts]]
+context_pattern = ".*/*term-finance-k8s-testnet"
+user_pattern = ".*/*term-finance-k8s-testnet"
+style = "yellow"
+context_alias = "tf-testnet"
+user_alias = "admin"
 
 [python]
 format = '[${symbol}${pyenv_prefix}${version}($virtualenv)]($style) '

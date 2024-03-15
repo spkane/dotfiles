@@ -1,3 +1,5 @@
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.pre.bash"
 #!/usr/bin/env bash
 
 #set -xv
@@ -141,6 +143,12 @@ if [ "${UNAME}" == "Darwin" ]; then
     fi
 fi
 
+#Slack
+export SLACK_DEVELOPER_MENU=true
+
+#LIMA/COLIMA
+export LIMA_INSTANCE=colima
+
 #1Password
 export OP_BIOMETRIC_UNLOCK_ENABLED=true
 
@@ -193,7 +201,7 @@ export RBENV_ROOT=${HOME}/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Do this after rbenv
-export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:${HOME}/.tea/.local/bin:${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
 
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
@@ -209,25 +217,13 @@ fi
 # location /.bash_it/themes/
 export PROMPT_DIRTRIM=2
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
-function blastoff(){
-  if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
-    echo -n "$(iterm2_prompt_mark)"
-  fi
-}
-export starship_precmd_user_func="blastoff"
-
-if command -v "starship" &> /dev/null; then
-  eval "$(starship init bash)"
-fi
-
 function swagger(){
   docker run --rm -it --user $(id -u):$(id -g) -p 8085:8080 -e GOPATH=$(go env GOPATH):/go -e XDG_CACHE_HOME=/tmp/.cache -v $HOME:$HOME -w $(pwd) quay.io/goswagger/swagger "$@"
 }
 
 export EDITOR="vim"
-export GIT_EDITOR="vim"
+# override git config
+#export GIT_EDITOR="vim"
 
 # Don't check mail when opening terminal.
 unset MAILCHECK
@@ -251,6 +247,7 @@ export LOKI_ADDR=http://localhost:3100
 # Kubernetes Yaml - Quickly
 export dr="--dry-run=client -o yaml"
 
+alias acd-init-pw='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
 alias ag="ag -f --hidden"
 alias aga="ag -f --hidden -a"
 alias agai="ag -f --hidden -a -i"
@@ -274,7 +271,7 @@ clrp() {
 }
 alias ckbuild="nerdctl build --namespace k8s.io "
 alias cstop="colima stop; kubectl config unset current-context"
-alias cstart="colima start --kubernetes-version v1.25.11+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
+alias cstart="colima start --kubernetes-version v1.26.6+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
 alias dc="docker compose"
 alias docker-compose="docker compose"
 alias dm="docker-machine"
@@ -345,6 +342,7 @@ alias pe="pipenv"
 alias pes="pipenv shell"
 alias r="rg"
 alias rmc="rm -rf ${HOME}/class/* && rm -f ${HOME}/class/.???*"
+alias s="hash -r && _SHOW_MESSAGES=1 exec -a -bash bash"
 alias sshkg="ssh-keygen -R"
 alias tf='terraform'
 alias tfp="tf plan -no-color | grep -E '^[[:punct:]]|Plan'"
@@ -369,10 +367,10 @@ fi
 #alias zz='fasd_cd -d -i' # cd with interactive selection
 
 # z.lua
-alias zz='z -c'      # restrict matches to subdirs of $PWD
-alias zi='z -i'      # cd with interactive selection
-alias zf='z -I'      # use fzf to select in multiple matches
-alias zb='z -b'      # quickly cd to the parent directory
+#alias zz='z -c'      # restrict matches to subdirs of $PWD
+#alias zi='z -i'      # cd with interactive selection
+#alias zf='z -I'      # use fzf to select in multiple matches
+#alias zb='z -b'      # quickly cd to the parent directory
 
 # unalias
 unalias sl 2> /dev/null
@@ -554,12 +552,12 @@ if command -v "dyff" &> /dev/null; then
   export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
 fi
 
-if [[ -e /usr/local/share/z.lua/z.lua ]]; then
-  eval "$(lua /usr/local/share/z.lua/z.lua --init bash enhanced once echo fzf)"
-fi
+#if [[ -e /opt/homebrew/opt/z.lua/share/z.lua/z.lua ]]; then
+#  eval "$(lua /opt/homebrew/opt/z.lua/share/z.lua/z.lua --init bash enhanced once echo fzf)"
+#fi
 
-if [[ -e /opt/homebrew/opt/z.lua/share/z.lua/z.lua ]]; then
-  eval "$(lua /opt/homebrew/opt/z.lua/share/z.lua/z.lua --init bash enhanced once echo fzf)"
+if command -v "zoxide" &> /dev/null; then
+  eval "$(zoxide init bash)"
 fi
 
 if command -v "fasd" &> /dev/null; then
@@ -616,8 +614,5 @@ export JINA_DEFAULT_WORKSPACE_BASE="${HOME}/.jina/executor-workspace"
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"
-
-
-test -d "$HOME/.tea" && source /dev/stdin <<<"$("$HOME/.tea/tea.xyz/v*/bin/tea" --magic=bash --silent)"
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.post.bash"
