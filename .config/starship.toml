@@ -64,13 +64,9 @@ style = "blue bold"
 # very-long-subscription-name = 'vlsn'
 
 [cmd_duration]
-<<<<<<< HEAD
-format = ' took [$duration]($style) '
-=======
 min_time = 0
 show_milliseconds = true
 format = "[$duration ]($style)"
->>>>>>> b9a1c58 (Updates (work))
 
 [directory]
 truncation_length = 3
