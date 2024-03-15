@@ -51,6 +51,8 @@ export PATH="$PATH:/Users/spkane/.local/bin"
 #complete -C /usr/local/Cellar/tfenv/3.0.0/versions/1.2.9/terraform terraform
 complete -C /Users/spkane/dev/superorbital/infrastructure/bin/Darwin/x86_64/terraform terraform
 
+export DISPLAY=":0"
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)PATH="/opt/podman/bin:$PATH"
