@@ -12,6 +12,8 @@ if [ -f /etc/bashrc ]; then
   source /etc/bashrc
 fi
 
+declare -Ag _xspecs
+
 if [[ "${ITERM_PROFILE}" == "Class" ]] || [[ "${ITERM_PROFILE}" == "Videos" ]] ; then
   export CLEAN_SHELL="true"
 fi
