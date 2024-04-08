@@ -439,45 +439,28 @@ if [[ -z "$LC_EXTRATERM_COOKIE" ]]; then
 fi
 
 #Apply our completions last
-(readonly | cut -d= -f1 | cut -d' ' -f3 | grep -q BASH_COMPLETION_COMPAT_DIR) || export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source "/usr/local/etc/profile.d/bash_completion.sh"
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
-if [ "${UNAME}" != "Darwin" ]; then
-  if [ -f "$([ -f /opt/homebrew/bin/brew ] && brew --prefix)/etc/bash_c/usr/local/etc/profile.d/bashompletion.d/vagrant" ]; then
-    source "$([ -f /opt/homebrew/bin/brew ] && brew --prefix)/etc/bash_completion.d/vagrant"
-  fi
-  if [ -f "$([ -f /usr/local/bin/brew ] && brew --prefix)/etc/bash_c/usr/local/etc/profile.d/bashompletion.d/vagrant" ]; then
-    source "$([ -f /usr/local/bin/brew ] && brew --prefix)/etc/bash_completion.d/vagrant"
-  fi
-fi
+
+export BASH_COMPLETION_USER_DIR="${HOME}/.bash_completion.d:/opt/homebrew/etc/bash_completion.d:/usr/local/etc/bash_completion.d:/etc/bash_completion.d"
+
+(readonly | cut -d= -f1 | cut -d' ' -f3 | grep -q BASH_COMPLETION_COMPAT_DIR) || export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 
 if command -v "kubectl-argo-rollouts" &> /dev/null; then
-  source <(kubectl-argo-rollouts completion bash)
+  eval "kubectl-argo-rollouts completion bash"
+fi
+
+if command -v "fzf" &> /dev/null; then
+  eval "$(fzf --bash)"
 fi
 
 if command -v "pack" &> /dev/null; then
-  . $(pack completion)
+  eval "$(pack completion)"
 fi
 
-[ -f ~/.hub-completion.sh ] && source ~/.hub-completion.sh
-[ -f ~/bin/completion-ruby/completion-ruby-all ] && source ~/bin/completion-ruby/completion-ruby-all
-[ -f ~/.rbenv/shims/tmuxinator_completion ] && source ~/.rbenv/shims/tmuxinator_completion
-
-if [[ -f ${HOME}/bin/setup_extraterm_bash.sh ]]; then
-  if [[ -n "$LC_EXTRATERM_COOKIE" ]]; then
-    source ${HOME}/bin/setup_extraterm_bash.sh
-  fi
-fi
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf.bash ] && eval ~/.fzf.bash
 export FZF_DEFAULT_OPS="--extended"
-
-mkdir -p "${HOME}/.bash_completion.d"
-for i in $(\ls -C1 ${HOME}/.bash_completion.d); do
-    source "${HOME}/.bash_completion.d/${i}"
-done
 
 # This appears to break incoming SCP in at least some circumstances...
 if [[ $- == *i* ]]; then
@@ -491,15 +474,15 @@ if command -v "logcli" &> /dev/null; then
 fi
 
 if command -v "cludo" &> /dev/null; then
-    source <(cludo completion bash)
+    eval "$(cludo completion bash)"
 fi
 
 if command -v "golangci-lint" &> /dev/null; then
-  source <(golangci-lint completion bash)
+  eval "$(golangci-lint completion bash)"
 fi
 
 if command -v "kubectl" &> /dev/null; then
-  source <(kubectl completion bash)
+  eval "$(kubectl completion bash)"
 fi
 
 if command -v "register-python-argcomplete" &> /dev/null; then
@@ -507,15 +490,15 @@ if command -v "register-python-argcomplete" &> /dev/null; then
 fi
 
 if command -v "velero" &> /dev/null; then
-  source <(velero completion bash)
+  eval "$(velero completion bash)"
 fi
 
 if command -v "limactl" &> /dev/null; then
-  source <(limactl completion bash)
+  eval "$(limactl completion bash)"
 fi
 
 if command -v "op" &> /dev/null; then
-  source <(op completion bash)
+  seval "$(op completion bash)"
 fi
 
 complete -C aws_completer aws
