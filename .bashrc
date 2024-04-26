@@ -498,7 +498,7 @@ if command -v "limactl" &> /dev/null; then
 fi
 
 if command -v "op" &> /dev/null; then
-  seval "$(op completion bash)"
+  eval "$(op completion bash)"
 fi
 
 complete -C aws_completer aws
