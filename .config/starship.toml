@@ -120,6 +120,9 @@ style = "yellow"
 context_alias = "tf-testnet"
 user_alias = "admin"
 
+[nodejs]
+symbol = "☊"
+
 [python]
 format = '[${symbol}${pyenv_prefix}${version}($virtualenv)]($style) '
 style = 'yellow'
