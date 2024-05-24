@@ -1,5 +1,5 @@
-# CodeWhisperer pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.pre.bash"
+# Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash"
 #!/usr/bin/env bash
 
 #set -xv
@@ -142,6 +142,9 @@ if [ "${UNAME}" == "Darwin" ]; then
     fi
 fi
 
+#Calibre
+export CALIBRE_CONFIG_DIRECTORY=/Volumes/Media/Books/calibre-prefs
+
 #Slack
 export SLACK_DEVELOPER_MENU=true
 
@@ -197,7 +200,7 @@ fi
 
 #rbenv
 export RBENV_ROOT=${HOME}/.rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv > /dev/null; then eval "$(rbenv init - bash)"; fi
 
 # Do this after rbenv
 export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
@@ -250,12 +253,13 @@ export LOKI_ADDR=http://localhost:3100
 # Kubernetes Yaml - Quickly
 export dr="--dry-run=client -o yaml"
 
-alias acd-init-pw='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
+alias acd-init-pw='kubecolor -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
 alias ag="ag -f --hidden"
 alias aga="ag -f --hidden -a"
 alias agai="ag -f --hidden -a -i"
 alias aptsearch="apt-cache search"
 alias aptprovides="apt-file update; apt-file search"
+alias aw="acidwarp -n -k"
 alias awsume=". awsume"
 if [ "${UNAME}" == "Darwin" ]; then
   if [ "${ARCH2}" == "arm64" ]; then
@@ -273,14 +277,14 @@ clrp() {
   unset $(compgen -v | grep -i "PROXY$")
 }
 alias ckbuild="nerdctl build --namespace k8s.io "
-alias cstop="colima stop; kubectl config unset current-context"
-alias cstart="colima start --kubernetes-version v1.26.6+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubectl config set current-context --namespace=default colima"
+alias cstop="colima stop; kubecolor config unset current-context"
+alias cstart="colima start --kubernetes-version v1.26.6+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubecolor config set current-context --namespace=default colima"
 alias dc="docker compose"
 alias docker-compose="docker compose"
 alias dm="docker-machine"
 alias drup="docker pull superorbital/drone-api && docker run -d --rm --name drone-api -p 8080:8080 superorbital/drone-api && docker logs drone-api | grep -i token"
 alias drdown="docker rm -f drone-api"
-alias ekstoken='aws eks get-token --cluster-name $(kubectl config current-context | cut -d / -f 2) | jq .status.token'
+alias ekstoken='aws eks get-token --cluster-name $(kubecolor config current-context | cut -d / -f 2) | jq .status.token'
 alias esnap="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save ./snapshot.db"
 alias erestore="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --data-dir /var/lib/etcd-backup snapshot restore ./snapshot.db"
 alias g="git"
@@ -299,40 +303,40 @@ alias gds="git diff --staged"
 alias h="history | grep -i"
 alias htop="sudo htop"
 alias ibrew='echo Run: /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-alias k="kubectl"
-alias ka="kubectl api-resources"
-alias kaf="kubectl apply -f"
-alias kc="kubectl create"
-alias kcf="kubectl create -f"
+alias k="kubecolor"
+alias ka="kubecolor api-resources"
+alias kaf="kubecolor apply -f"
+alias kc="kubecolor create"
+alias kcf="kubecolor create -f"
 alias kconf="kubeconform -summary -strict"
 alias kcpualloc='kutil | grep % | awk '\''{print $1}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*20), "%\n" } }'\'''
-alias kcpyd='kubectl create pod -o yaml --dry-run=client'
+alias kcpyd='kubecolor create pod -o yaml --dry-run=client'
 alias kctx="kubectx"
-alias kd='kubectl describe'
-alias kdel='kubectl delete'
-alias ke='kubectl exec'
-alias kevents="kubectl get events -A --sort-by='{.lastTimestamp}'"
-alias kex="kubectl explain --recursive"
-alias kg='kubectl get'
-alias kgp='kubectl get pod'
-alias kgsvcoyaml='kubectl get service -o=yaml'
-alias kgsvcslwn='watch kubectl get service --show-labels --namespace'
-alias kgsvcwn='watch kubectl get service --namespace'
-alias ki='kubectl cluster-info'
-alias kl='kubectl logs'
+alias kd='kubecolor describe'
+alias kdel='kubecolor delete'
+alias ke='kubecolor exec'
+alias kevents="kubecolor get events -A --sort-by='{.lastTimestamp}'"
+alias kex="kubecolor explain --recursive"
+alias kg='kubecolor get'
+alias kgp='kubecolor get pod'
+alias kgsvcoyaml='kubecolor get service -o=yaml'
+alias kgsvcslwn='watch kubecolor get service --show-labels --namespace'
+alias kgsvcwn='watch kubecolor get service --namespace'
+alias ki='kubecolor cluster-info'
+alias kl='kubecolor logs'
 alias kmemalloc='kutil | grep % | awk '\''{print $5}'\'' | awk '\''{ sum += $1 } END { if (NR > 0) { print sum/(NR*75), "%\n" } }'\'''
 #alias kns="kubens"
 function kns() {
-  kubectl config set-context --current --namespace=${1}
+  kubecolor config set-context --current --namespace=${1}
 }
-alias komgd='kubectl delete --grace-period 0 --force'
-alias kr='kubectl run'
-alias ksysgpo='kubectl --namespace=kube-system get pod'
-alias kun='kubectl config unset current-context'
+alias komgd='kubecolor delete --grace-period 0 --force'
+alias kr='kubecolor run'
+alias ksysgpo='kubecolor --namespace=kube-system get pod'
+alias kun='kubecolor config unset current-context'
 alias kus='kustomize'
-alias kuse='kubectl config use-context '
-alias kutil='kubectl get nodes --no-headers | awk '\''{print $1}'\'' | xargs -I {} sh -c '\''echo {} ; kubectl describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo '\'''
-alias kw='watch -n 0.5 "kubectl config current-context; echo ""; kubectl config view | grep namespace; echo ""; kubectl get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"'
+alias kuse='kubecolor config use-context '
+alias kutil='kubecolor get nodes --no-headers | awk '\''{print $1}'\'' | xargs -I {} sh -c '\''echo {} ; kubecolor describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo '\'''
+alias kw='watch -n 0.5 "kubecolor config current-context; echo ""; kubecolor config view | grep namespace; echo ""; kubecolor get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"'
 alias ldo="lazydocker"
 alias lg="lazygit"
 alias ls="exa"
@@ -347,6 +351,7 @@ alias r="rg"
 alias rmc="rm -rf ${HOME}/class/* && rm -f ${HOME}/class/.???*"
 alias s="hash -r && _SHOW_MESSAGES=1 exec -a -bash bash"
 alias sshkg="ssh-keygen -R"
+alias stc-l='stc -homedir="/Users/spkane/Library/Application Support/Syncthing/"'
 alias tf='terraform'
 alias tfp="tf plan -no-color | grep -E '^[[:punct:]]|Plan'"
 alias ungron="gron --ungron"
@@ -506,7 +511,7 @@ if command -v "op" &> /dev/null; then
 fi
 
 complete -C aws_completer aws
-complete -F __start_kubectl k
+complete -F __start_kubectl k kubecolor
 
 # Golang
 export PATH="/usr/local/go/bin:$PATH"
@@ -600,5 +605,5 @@ export JINA_DEFAULT_WORKSPACE_BASE="${HOME}/.jina/executor-workspace"
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-# CodeWhisperer post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/bashrc.post.bash"
+# Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash"

@@ -120,6 +120,13 @@ style = "yellow"
 context_alias = "tf-testnet"
 user_alias = "admin"
 
+[[kubernetes.contexts]]
+context_pattern = ".*/*cluster/superorbital-dev-spkane"
+user_pattern = ".*/*cluster/superorbital-dev-spkane"
+style = "yellow"
+context_alias = "so-dev-spkane"
+user_alias = "admin"
+
 [nodejs]
 symbol = "☊"
 
