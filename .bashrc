@@ -233,10 +233,14 @@ export SCM_CHECK=true
 if [ "${UNAME}" == "Darwin" ]; then
   if [ "${ARCH2}" == "arm64" ]; then
     curlbin=$([ -d /opt/homebrew/Cellar/curl ] && find /opt/homebrew/Cellar/curl -name curl | grep bin | head -n 1)
-    alias curl="${curlbin}"
+    if [[ "${curlbin}" != "" ]]; then
+      alias curl="${curlbin}"
+    fi
   else
     curlbin=$([ -d /usr/local/Cellar/curl ] && find /usr/local/Cellar/curl -name curl | grep bin | head -n 1)
-    alias curl="${curlbin}"
+    if [[ "${curlbin}" != "" ]]; then
+      alias curl="${curlbin}"
+    fi
   fi
 fi
 
