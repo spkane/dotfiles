@@ -21,7 +21,7 @@ fi
 #  export SSH_AUTH_SOCK=${HOME}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 #elif
 if command -v "keychain" &> /dev/null; then
-  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 id_ed25519_sean_so 0845757D65596830)"
+  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 id_ed25519_techlabs ED04165B04FB5497)"
 fi
 
 gpip(){
@@ -96,6 +96,11 @@ test -e "/opt/homebrew/opt/asdf/libexec/asdf.sh" && source /opt/homebrew/opt/asd
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/m4/bin:$PATH"
+
+# Added by OrbStack: command-line tools and integration
+source ~/.orbstack/shell/init.bash 2>/dev/null || :
 
 # Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash"

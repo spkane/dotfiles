@@ -1,12 +1,11 @@
 [gpg]
   format = ssh
-  program = gpg
 
 [gpg "ssh"]
   program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 
 [commit]
-  gpgsign = false
+  gpgsign = true
 
 [core]
   excludesfile = /Users/spkane/.gitignore
@@ -133,23 +132,9 @@
 [include]
   path = ~/.gitconfig.personal
 
-[includeIf "gitdir/i:~/dev/term-finance/"]
-  path = ~/.gitconfig.personal.term-finance
-
-[includeIf "gitdir/i:~/dev/aa-american/"]
-  path = ~/.gitconfig.personal.american-airlines
-
-[includeIf "gitdir/i:~/dev/beyond-aerospace/"]
-  path = ~/.gitconfig.personal.beyond-aerospace
-
-[includeIf "gitdir/i:~/dev/amg/"]
-  path = ~/.gitconfig.personal.amg
-
-[includeIf "gitdir/i:~/dev/bloomberg/"]
-  path = ~/.gitconfig.personal.bloomberg
-
-[includeIf "gitdir/i:~/dev/m10/"]
-  path = ~/.gitconfig.personal.m10
+[includeIf "gitdir/i:~/class/"]
+  path = ~/.gitconfig.personal.class
 
 [includeIf "gitdir/i:~/dev/superorbital/"]
   path = ~/.gitconfig.personal.superorbital
+

@@ -359,7 +359,7 @@ alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 if command -v "keychain" &> /dev/null; then
 function load_keys {
-  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 id_ed25519_sean_so 0845757D65596830 7A54FF362955E1BE 45D6A71D79DD1F7D)"
+  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 id_ed25519_techlabs ED04165B04FB5497)"
 }
 fi
 
@@ -523,7 +523,7 @@ else
   GOROOT=$(go env GOROOT)
 fi
 export GOROOT
-ln -sfh "${GOROOT}" /Users/${USER}/dev/go/root 2> /dev/null
+ln -sfh "${GOROOT}" "/Users/${USER}/dev/go/root" 2> /dev/null
 if $(cd /usr/local/go 2> /dev/null); then
   PASS=TRUE # noop
 else
