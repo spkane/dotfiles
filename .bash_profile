@@ -99,3 +99,4 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 # Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash"
+export PATH=/Users/spkane/local/bin:$PATH

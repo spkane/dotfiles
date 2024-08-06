@@ -198,12 +198,12 @@ then
   export PATH="$PATH:/usr/ucb"
 fi
 
-#rbenv
+#rbenv - ruby
 export RBENV_ROOT=${HOME}/.rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init - bash)"; fi
 
 # Do this after rbenv
-export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
+export PATH="$HOME/.rbenv/bin:${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
 
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
@@ -339,7 +339,6 @@ alias kutil='kubecolor get nodes --no-headers | awk '\''{print $1}'\'' | xargs -
 alias kw='watch -n 0.5 "kubecolor config current-context; echo ""; kubecolor config view | grep namespace; echo ""; kubecolor get namespace,node,ingress,pod,svc,job,cronjob,deployment,rs,pv,pvc,secret,ep -o wide"'
 alias ldo="lazydocker"
 alias lg="lazygit"
-alias ls="exa"
 alias mdcat="pandoc -f markdown -t plain"
 alias mtr="sudo mtr"
 if command -v "op" &> /dev/null; then
@@ -444,7 +443,7 @@ shopt -s histappend
 export FOREIGN_ALIASES_OVERRIDE=True
 
 if [[ -z "$LC_EXTRATERM_COOKIE" ]]; then
-  PROMPT_COMMAND="history -a;history -n;${PROMPT_COMMAND}"
+  PROMPT_COMMAND="history -a; history -r; history -n; ${PROMPT_COMMAND}"
 fi
 
 #Apply our completions last
