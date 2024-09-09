@@ -3,7 +3,7 @@
 #!/usr/bin/env bashexport BASH_SILENCE_DEPRECATION_WARNING=1
 
 # If not running interactively, don't do anything
-[[ $- == *i* ]] || return
+[[ $- == *i* ]] || return 0
 
 if [ -f ~/.bashrc ]; then
   source ~/.bashrc
