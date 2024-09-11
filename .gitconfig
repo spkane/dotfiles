@@ -98,6 +98,7 @@
 [push]
   default = nothing
   autoSetupRemote = true
+	followTags = true
 
 [gitreview]
   username = spkane

@@ -1,0 +1,46 @@
+{
+    "profiles": [
+        {
+            "complex_modifications": {
+                "rules": [
+                    {
+                        "description": "Home to Control Left",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "home"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_arrow",
+                                        "modifiers": "control"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "End to Control Right",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "end"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_arrow",
+                                        "modifiers": "control"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "name": "Default profile",
+            "selected": true
+        }
+    ]
+}
