@@ -19,6 +19,7 @@ format = """\
     $helm\
     $dotnet\
     $golang\
+    $conda\
     $java\
     $nodejs\
     $python\
@@ -26,7 +27,6 @@ format = """\
     $rust\
     $terraform\
     $nix_shell\
-    $conda\
     $memory_usage\
     $cmd_duration\
     $line_break\
@@ -62,6 +62,9 @@ style = "blue bold"
 
 [azure.subscription_aliases]
 # very-long-subscription-name = 'vlsn'
+
+[conda]
+format = '[$symbol$environment](dimmed green) '
 
 [cmd_duration]
 min_time = 0
