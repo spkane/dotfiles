@@ -1,5 +1,6 @@
-# Q pre block. Keep at the top of this file.
+# Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.pre.bash"
+# Q pre block. Keep at the top of this file.
 #!/usr/bin/env bashexport BASH_SILENCE_DEPRECATION_WARNING=1
 
 # If not running interactively, don't do anything
@@ -103,7 +104,6 @@ export PATH="/opt/homebrew/opt/m4/bin:$PATH"
 source ~/.orbstack/shell/init.bash 2>/dev/null || :
 
 # Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash"
 export PATH=/Users/spkane/local/bin:$PATH
 
 # >>> conda initialize >>>
@@ -120,4 +120,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash"
 

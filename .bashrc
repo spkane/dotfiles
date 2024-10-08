@@ -78,6 +78,14 @@ docs(){
   open "dash://${1}:${2}"
 }
 
+cdt() {
+  pushd "$(git rev-parse --show-toplevel)" || return
+}
+
+codet() {
+  code "$(git rev-parse --show-toplevel)"
+}
+
 # Configure some macOS specific settings
 if [ "${UNAME}" == "Darwin" ]; then
   # See: https://www.mackungfu.org/UsabilityhackClickdraganywhereinmacOSwindowstomovethem
@@ -606,3 +614,4 @@ export PATH="$PATH:/Users/spkane/.rd/bin"
 
 # Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash"
+
