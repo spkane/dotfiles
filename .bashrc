@@ -1,8 +1,14 @@
-# Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash"
 #!/usr/bin/env bash
 
-#set -xv
+##set -xv
+
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
+  builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
+fi
+
+# Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash"
+
 
 # If not running interactively, don't do anything
 #[[ $- == *i* ]] || return
@@ -308,6 +314,8 @@ alias gpohf="git push -f origin HEAD"
 alias gs="git status"
 alias gd="git diff"
 alias gds="git diff --staged"
+alias glog="sudo log stream --level debug --predicate 'subsystem==\"com.mitchellh.ghostty\"'"
+alias gterm="infocmp -x | ssh ${SSH_SERVER} -- tic -x -"
 alias h="history | grep -i"
 alias htop="sudo htop"
 alias ibrew='echo Run: /bin/bash -c "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
