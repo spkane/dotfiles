@@ -1,7 +1,7 @@
 // ~/.finicky.js
 
 module.exports = {
-  defaultBrowser: "Google Chrome",
+  defaultBrowser: "Arc",
   rewrite: [
     {
       // Redirect all urls to use https
@@ -31,7 +31,7 @@ module.exports = {
       browser: "Firefox"
     },
     {
-      // Open any url that includes the string "workplace" in Firefox
+      // Open any url that includes the string "firefox" in Firefox
       match: "/firefox/",
       browser: "Firefox"
     },
