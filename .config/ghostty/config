@@ -1,3 +1,12 @@
-shell-integration = bash
-shell-integration-features = sudo
+auto-update                = download
+font-family                = "Fira Code"
+font-size                  = 18
+mouse-hide-while-typing    = true
+shell-integration          = detect
+shell-integration-features = cursor,sudo,title
+window-height              = 40
+window-width               = 120
+window-save-state          = always
+window-theme               = auto
+window-title-font-family   = "Fira Code"
 
