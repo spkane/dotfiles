@@ -1,7 +1,7 @@
 auto-update                = download
 font-family                = "Fira Code"
 font-size                  = 18
-mouse-hide-while-typing    = true
+mouse-hide-while-typing    = false
 shell-integration          = detect
 shell-integration-features = cursor,sudo,title
 window-height              = 40
