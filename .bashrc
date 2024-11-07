@@ -212,12 +212,7 @@ then
   export PATH="$PATH:/usr/ucb"
 fi
 
-#rbenv - ruby
-export RBENV_ROOT=${HOME}/.rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init - bash)"; fi
-
-# Do this after rbenv
-export PATH="$HOME/.rbenv/bin:${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
 
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
@@ -430,14 +425,14 @@ if [ "${UNAME}" != "Darwin" ]; then
     fi
 fi
 
-#rbenv
-if [ "${UNAME}" != "Darwin" ]; then
-  if [ "${ARCH2}" == "arm64" ]; then
-    alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /opt/homebrew/bin/brew ] && brew --prefix openssl)\" rbenv "
-  else
-    alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /usr/local/bin/brew ] && brew --prefix openssl)\" rbenv "
-  fi
-fi
+#rbenv (Do we need this for asdf?)
+#if [ "${UNAME}" != "Darwin" ]; then
+#  if [ "${ARCH2}" == "arm64" ]; then
+#    alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /opt/homebrew/bin/brew ] && brew --prefix openssl)\" rbenv "
+#  else
+#    alias rbenv="RUBY_CONFIGURE_OPTS=\"--with-openssl-dir=$([ -f /usr/local/bin/brew ] && brew --prefix openssl)\" rbenv "
+#  fi
+#fi
 
 #tfenv
 export TFENV_AUTO_INSTALL=true
