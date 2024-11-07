@@ -96,8 +96,6 @@ test -e "/opt/homebrew/opt/asdf/libexec/asdf.sh" && source /opt/homebrew/opt/asd
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
 export PATH="/opt/homebrew/opt/m4/bin:$PATH"
 
 # Added by OrbStack: command-line tools and integration

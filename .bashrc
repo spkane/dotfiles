@@ -212,7 +212,7 @@ then
   export PATH="$PATH:/usr/ucb"
 fi
 
-export PATH="${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/.asdf/shims:${HOME}/bin:${KREW_ROOT:-$HOME/.krew}/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${HOME}/.local/bin:${PATH}"
 
 #Make git github aware
 if [ -e "/usr/local/bin/hub" ] || [ -e "/opt/homebrew/bin/hub"  ] || [ -e "${HOME}/bin/hub"  ]; then
