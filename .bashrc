@@ -357,6 +357,7 @@ if command -v "op" &> /dev/null; then
 fi
 alias pe="pipenv"
 alias pes="pipenv shell"
+alias pc="/opt/homebrew/bin/pre-commit"
 alias r="rg"
 alias rmc="rm -rf ${HOME}/class/* && rm -f ${HOME}/class/.???*"
 alias s="hash -r && _SHOW_MESSAGES=1 exec -a -bash bash"

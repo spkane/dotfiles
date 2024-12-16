@@ -1,7 +1,7 @@
 // ~/.finicky.js
 
 module.exports = {
-  defaultBrowser: "Arc",
+  defaultBrowser: "Google Chrome",
   rewrite: [
     {
       // Redirect all urls to use https
