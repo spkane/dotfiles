@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash"
 
 ##set -xv
 
@@ -7,8 +9,6 @@ if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
 fi
 
 # Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash"
-
 
 # If not running interactively, don't do anything
 #[[ $- == *i* ]] || return
@@ -617,5 +617,6 @@ export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 # Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash"
 
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash"
