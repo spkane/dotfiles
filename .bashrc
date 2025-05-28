@@ -261,6 +261,7 @@ export LOKI_ADDR=http://localhost:3100
 
 # Kubernetes Yaml - Quickly
 export dr="--dry-run=client -o yaml"
+export KUBECTL_KUBERC=true
 
 alias acd-init-pw='kubecolor -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
 alias ag="ag -f --hidden"
@@ -476,7 +477,7 @@ if command -v "fzf" &> /dev/null; then
 fi
 
 if command -v "pack" &> /dev/null; then
-  eval "$(pack completion)"
+  eval "$(pack --show-completion)"
 fi
 
 [ -f ~/.fzf.bash ] && eval ~/.fzf.bash
@@ -620,3 +621,5 @@ export PATH="$PATH:/Users/spkane/.rd/bin"
 
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash"
+
+# source '/Users/spkane/.bash_completions/pack.sh'
