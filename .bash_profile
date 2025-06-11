@@ -14,14 +14,15 @@ if [ -e "/usr/bin/uname" ]; then
   export UNAME=$(/usr/bin/uname)
   export ARCH=$(/usr/bin/uname -m)
 else
-  export UNAME=$(/bin/uname)
-  export ARCH=$(/bin/uname -m)
+  export UNAME=$(/usr/bin/env uname)
+  export ARCH=$(/usr/bin/env uname -m)
 fi
 
 #if [ "${UNAME}" == "Darwin" ]; then
 #  export SSH_AUTH_SOCK=${HOME}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 #elif
 if command -v "keychain" &> /dev/null; then
+  set -h
   hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 id_ed25519_techlabs ED04165B04FB5497)"
 fi
 
@@ -70,13 +71,14 @@ then
   fi
 fi
 
-function blastoff(){
-  if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
-    echo -n "$(iterm2_prompt_mark)"
- fi
-}
-
-export starship_precmd_user_func="blastoff"
+if command -v "iterm2_prompt_mark" &> /dev/null; then
+  function blastoff(){
+    if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
+      echo -n "$(iterm2_prompt_mark)"
+   fi
+  }
+  export starship_precmd_user_func="blastoff"
+fi
 
 _convert_pc_to_array() {
   mapfile -t _PROMPT_COMMAND <<<"${PROMPT_COMMAND}"
@@ -90,6 +92,8 @@ declare -ga precmd_functions=()
 if [ -x $HOMEBREW_PREFIX/bin/starship ]; then
   eval "$(starship init bash)"
   _convert_pc_to_array
+elif command -v "starship" &> /dev/null; then
+  eval "$(/usr/bin/env starship init bash)"
 fi
 
 test -e "/opt/homebrew/opt/asdf/libexec/asdf.sh" && source /opt/homebrew/opt/asdf/libexec/asdf.sh

@@ -1,3 +1,14 @@
 .DS_Store
 *.tmp
 *personal*
+
+# Nix & devenv
+result
+.env
+.env.*
+.devenv*
+.direnv*
+/.cache
+/.pre-commit-config.yaml
+man
+
