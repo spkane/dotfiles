@@ -18,6 +18,8 @@ if [ -f /etc/bashrc ]; then
   source /etc/bashrc
 fi
 
+ulimit -n 4096
+
 declare -Ag _xspecs
 
 if [[ "${ITERM_PROFILE}" == "Class" ]] || [[ "${ITERM_PROFILE}" == "Videos" ]] ; then
@@ -174,6 +176,11 @@ export ORGNAME=imaging
 
 #AWS
 export AWS_CREDENTIAL_FILE="${HOME}/.aws/credentials"
+export AWS_PROFILE="ditto-scratchpad-skane"
+export AWS_REGION="us-east-1"
+
+# Claude
+export MCP_LOG_LEVEL="ERROR"
 
 #Vagrant
 export LOCAL_SSH_PRIVATE_KEY=~/.ssh/vagrant-id
@@ -288,7 +295,7 @@ clrp() {
 }
 alias ckbuild="nerdctl build --namespace k8s.io "
 alias cstop="colima stop; kubecolor config unset current-context"
-alias cstart="colima start --kubernetes-version v1.26.6+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubecolor config set current-context --namespace=default colima"
+alias cstart="colima start --vz-rosetta --kubernetes-version v1.31.12+k3s1 --cpu 8 --memory 8 --disk 100 --runtime containerd --with-kubernetes --network-address && kubecolor config set current-context --namespace=default colima"
 alias dc="docker compose"
 alias docker-compose="docker compose"
 alias dm="docker-machine"
@@ -297,6 +304,7 @@ alias drdown="docker rm -f drone-api"
 alias ekstoken='aws eks get-token --cluster-name $(kubecolor config current-context | cut -d / -f 2) | jq .status.token'
 alias esnap="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save ./snapshot.db"
 alias erestore="ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --data-dir /var/lib/etcd-backup snapshot restore ./snapshot.db"
+alias dns-flush-cache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 alias g="git"
 alias ga="git add"
 alias ga.="git add ."
@@ -306,7 +314,7 @@ alias gac="git add . && git commit"
 alias gc="git commit"
 alias gdoc="godoc -http=127.0.0.1:6060"
 alias gpoh="git push origin HEAD"
-alias gpohf="git push -f origin HEAD"
+alias gpohf="git push --force-with-lease origin HEAD"
 alias gs="git status"
 alias gd="git diff"
 alias gds="git diff --staged"
@@ -372,7 +380,7 @@ alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 if command -v "keychain" &> /dev/null; then
 function load_keys {
-  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 id_ed25519_techlabs ED04165B04FB5497)"
+  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 B707FAABB70E763D)"
 }
 fi
 
@@ -468,6 +476,8 @@ export BASH_COMPLETION_USER_DIR="${HOME}/.bash_completion.d:/opt/homebrew/etc/ba
 
 (readonly | cut -d= -f1 | cut -d' ' -f3 | grep -q BASH_COMPLETION_COMPAT_DIR) || export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 
+# Defer mise activation until after all PATH modifications
+
 if command -v "kubectl-argo-rollouts" &> /dev/null; then
   eval "kubectl-argo-rollouts completion bash"
 fi
@@ -525,6 +535,9 @@ fi
 complete -C aws_completer aws
 complete -F __start_kubectl k kubecolor
 
+#Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # Golang
 export PATH="/usr/local/go/bin:$PATH"
 export GOPATH="/Users/${USER}/dev/go/path"
@@ -561,6 +574,7 @@ fi
 
 if command -v "zoxide" &> /dev/null; then
   eval "$(zoxide init bash)"
+  export _ZO_DOCTOR=0
 fi
 
 if command -v "fasd" &> /dev/null; then
@@ -576,7 +590,7 @@ for i in $(\ls -C1 ${HOME}/.bashrc.personal*); do
     source "${i}"
 done
 
-export PATH="$PATH:/Users/${USER}/.local/bin"
+export PATH="$PATH:/Users/${USER}/.local/bin:/Applications/Godot_mono.app/Contents/MacOS/"
 
 # gcloud
 if [[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc ]]; then
@@ -584,6 +598,20 @@ if [[ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.
 elif [[ -f /opt/homebrew/share/google-cloud-sdk/path.bash.inc ]]; then
   source "/opt/homebrew/share/google-cloud-sdk/path.bash.inc"
 fi
+
+# homebrew
+cat <<EOT >> ~/.bash_profile
+[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+EOT
+
+# Activate mise AFTER all other PATH modifications to ensure mise tools are first
+if command -v "mise" &> /dev/null; then
+  eval "$(mise activate bash)"
+fi
+
+# Virtualenv activation commented out to allow mise Python to take precedence
+# Uncomment if you need the global virtualenv, or activate manually when needed
+# source ~/.venv/bin/activate
 
 # JINA_CLI_BEGIN
 
@@ -623,3 +651,12 @@ export PATH="$PATH:/Users/spkane/.rd/bin"
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash"
 
 # source '/Users/spkane/.bash_completions/pack.sh'
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/seankane/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# Unset __zsh_like_cd if it exists to prevent errors
+unset -f cd 2>/dev/null
+

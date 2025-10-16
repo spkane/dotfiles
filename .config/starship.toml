@@ -130,6 +130,13 @@ style = "yellow"
 context_alias = "so-dev-spkane"
 user_alias = "admin"
 
+[[kubernetes.contexts]]
+context_pattern = "sean.kane-us-east-1-prod.cfa-test-k8s.ditto.live"
+user_pattern = "sean.kane-us-east-1-prod.cfa-test-k8s.ditto.live"
+style = "yellow"
+context_alias = "ditto-CFA-test"
+user_alias = "sk"
+
 [nodejs]
 symbol = "☊"
 
