@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+# if not interactive return early
+[[ $- == *i* ]] || return
+
+
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash"
 
@@ -9,9 +14,6 @@ if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
 fi
 
 # Q pre block. Keep at the top of this file.
-
-# If not running interactively, don't do anything
-#[[ $- == *i* ]] || return
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -27,13 +29,6 @@ if [[ "${ITERM_PROFILE}" == "Class" ]] || [[ "${ITERM_PROFILE}" == "Videos" ]] ;
 fi
 
 export TZ='America/Los_Angeles'
-if [ "${UNAME}" == "Darwin" ]; then
-  if [ "${ARCH2}" == "arm64" ]; then
-    export VAGRANT_DEFAULT_PROVIDER='parallels'
-  else
-    export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
-  fi
-fi
 
 # Don't forget to backup .inputrc (readline history searching)
 
@@ -44,8 +39,8 @@ if [ -e "/usr/bin/uname" ]; then
   export UNAME=$(/usr/bin/uname)
   export ARCH=$(/usr/bin/uname -m)
 else
-  export UNAME=$(/bin/uname)
-  export ARCH=$(/bin/uname -m)
+  export UNAME=$(/usr/bin/env uname)
+  export ARCH=$(/usr/bin/env uname -m)
 fi
 
 export UNAME2=$(echo "${UNAME}" | tr '[:upper:]' '[:lower:]')
@@ -67,6 +62,14 @@ if [[ "${CLEAN_SHELL}" != "true" ]]; then
  export PROMPT_ID="🔴"
 else
  export PROMPT_ID="🟢"
+fi
+
+if [ "${UNAME}" == "Darwin" ]; then
+  if [ "${ARCH2}" == "arm64" ]; then
+    export VAGRANT_DEFAULT_PROVIDER='parallels'
+  else
+    export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+  fi
 fi
 
 # Colorize stderr
@@ -369,7 +372,7 @@ alias pes="pipenv shell"
 alias pc="/opt/homebrew/bin/pre-commit"
 alias r="rg"
 alias rmc="rm -rf ${HOME}/class/* && rm -f ${HOME}/class/.???*"
-alias s="hash -r && _SHOW_MESSAGES=1 exec -a -bash bash"
+alias s="set -h && hash -r && _SHOW_MESSAGES=1 exec -a -bash bash"
 alias sshkg="ssh-keygen -R"
 alias stc-l='stc -homedir="/Users/spkane/Library/Application Support/Syncthing/"'
 alias tf='terraform'
@@ -415,8 +418,13 @@ export TF_PLUGIN_CACHE_DIR="${HOME}/.terraform-plugin-cache"
 #pipenv
 export PIPENV_MAX_DEPTH=4
 
-MANPATH="$(/usr/bin/manpath):${HOME}/man"
-export MANPATH
+if [[ -e /usr/bin/manpath ]]; then
+  MANPATH="$(/usr/bin/manpath -q):${HOME}/man"
+  export MANPATH
+else
+  MANPATH="$(/usr/bin/env manpath -q):${HOME}/man"
+  export MANPATH
+fi
 
 export ANSIBLE_NOCOWS=1
 export ANSIBLE_VAULT_PASSWORD_FILE="./.vault_pass"
@@ -549,13 +557,24 @@ else
   GOROOT=$(go env GOROOT)
 fi
 export GOROOT
-ln -sfh "${GOROOT}" "/Users/${USER}/dev/go/root" 2> /dev/null
+mkdir -p ${HOME}/dev/go/
+if [ "${UNAME}" == "Darwin" ]; then
+  ln -sfh "${GOROOT}" "/${HOME}/dev/go/root" 2> /dev/null
+else
+  ln -sfL "${GOROOT}" "${HOME}/dev/go/root" 2> /dev/null
+fi
+
 if $(cd /usr/local/go 2> /dev/null); then
   PASS=TRUE # noop
 else
   echo "Prmopting for sudo password to create GOROOT link."
+  sudo mkdir -p /usr/local
   sudo rm -f /usr/local/go
-  sudo ln -sfh "${GOROOT}" /usr/local/go
+  if [ "${UNAME}" == "Darwin" ]; then
+    sudo ln -sfL "${GOROOT}" /usr/local/go
+  else
+    sudo ln -sfL "${GOROOT}" /usr/local/go
+  fi
 fi
 export MYGOBIN="$GOPATH/bin"
 export PATH="${MYGOBIN}:${PATH}"
