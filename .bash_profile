@@ -1,10 +1,12 @@
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.pre.bash"
-# Q pre block. Keep at the top of this file.
-#!/usr/bin/env bashexport BASH_SILENCE_DEPRECATION_WARNING=1
+#!/usr/bin/env bash
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # If not running interactively, don't do anything
 [[ $- == *i* ]] || return 0
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash"
 
 if [ -f ~/.bashrc ]; then
   source ~/.bashrc
@@ -104,7 +106,6 @@ export PATH="/opt/homebrew/opt/m4/bin:$PATH"
 # Added by OrbStack: command-line tools and integration
 source ~/.orbstack/shell/init.bash 2>/dev/null || :
 
-# Q post block. Keep at the bottom of this file.
 export PATH=/Users/spkane/local/bin:$PATH
 
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
@@ -112,7 +113,10 @@ export PATH=/Users/spkane/local/bin:$PATH
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/seankane/.lmstudio/bin"
 # End of LM Studio CLI section
-#
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bash_profile.post.bash"
 
+# Bash Completions
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+[[ -r "/etc/profile.d/bash_completion.sh" ]] && . "/etc/profile.d/bash_completion.sh"
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash"

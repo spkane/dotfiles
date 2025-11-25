@@ -3,17 +3,14 @@
 # if not interactive return early
 [[ $- == *i* ]] || return
 
+#set -xv
 
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.pre.bash"
-
-##set -xv
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash"
 
 if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
   builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
 fi
-
-# Q pre block. Keep at the top of this file.
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -179,8 +176,8 @@ export ORGNAME=imaging
 
 #AWS
 export AWS_CREDENTIAL_FILE="${HOME}/.aws/credentials"
-export AWS_PROFILE="ditto-scratchpad-skane"
-export AWS_REGION="us-east-1"
+export AWS_PROFILE="default"
+export AWS_REGION="us-west-2"
 
 # Claude
 export MCP_LOG_LEVEL="ERROR"
@@ -618,11 +615,6 @@ elif [[ -f /opt/homebrew/share/google-cloud-sdk/path.bash.inc ]]; then
   source "/opt/homebrew/share/google-cloud-sdk/path.bash.inc"
 fi
 
-# homebrew
-cat <<EOT >> ~/.bash_profile
-[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
-EOT
-
 # Activate mise AFTER all other PATH modifications to ensure mise tools are first
 if command -v "mise" &> /dev/null; then
   eval "$(mise activate bash)"
@@ -664,12 +656,11 @@ export JINA_DEFAULT_WORKSPACE_BASE="${HOME}/.jina/executor-workspace"
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-# Q post block. Keep at the bottom of this file.
-
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/bashrc.post.bash"
-
-# source '/Users/spkane/.bash_completions/pack.sh'
+for file in ${HOME}/.bash_completions/*; do
+  if [[ -e "$file" && -r "$file" ]]; then
+    source "$file"
+  fi
+done
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/seankane/.lmstudio/bin"
@@ -679,3 +670,5 @@ export PATH="$PATH:/Users/seankane/.lmstudio/bin"
 # Unset __zsh_like_cd if it exists to prevent errors
 unset -f cd 2>/dev/null
 
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash"
