@@ -8,8 +8,10 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash"
 
-if [ -f ~/.bashrc ]; then
-  source ~/.bashrc
+if [[ $- == *i* ]] && shopt -q login_shell; then
+  if [ -e ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
 fi
 
 if [ -e "/usr/bin/uname" ]; then

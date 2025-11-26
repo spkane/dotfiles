@@ -8,9 +8,9 @@
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash"
 
-if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
-  builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
-fi
+export NIX_BUILD_CORES=12
+
+export KUBECONFIG="${HOME}/.kube/config"
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -18,6 +18,16 @@ if [ -f /etc/bashrc ]; then
 fi
 
 ulimit -n 4096
+
+if [[ "$-" == *i* ]] && [[ ! -o login ]]; then
+  if [[ -e ~/.bash_profile ]]; then
+    . ~/.bash_profile
+  fi
+fi
+
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
+  builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
+fi
 
 declare -Ag _xspecs
 
@@ -140,7 +150,7 @@ export LC_ALL=en_US.UTF-8
 
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-export GREP_COLOR='1;30;43'
+export GREP_COLOR='mt=1;30;43'
 
 # Don't override the default TMPDIR on MacOS
 if [ "${UNAME}" != "Darwin" ]; then
@@ -278,6 +288,7 @@ alias aptsearch="apt-cache search"
 alias aptprovides="apt-file update; apt-file search"
 alias aw="acidwarp -n -k"
 alias awsume=". awsume"
+alias chrome="chromium --ozone-platform=wayland"
 if [ "${UNAME}" == "Darwin" ]; then
   if [ "${ARCH2}" == "arm64" ]; then
     alias clean-shell="env -i CLEAN_SHELL=\"true\" SHELL=\"/opt/homebrew/bin/bash\" TERM=\"xterm-256color\" HOME=\"$HOME\" LC_CTYPE=\"${LC_ALL:-${LC_CTYPE:-$LANG}}\" PATH=\"$PATH\" USER=\"$USER\" /opt/homebrew/bin/bash"
@@ -580,6 +591,10 @@ export GOARCH="${ARCH2}"
 export GOOS="${UNAME2}"
 #export CGO_ENABLED=1
 
+#Wayland
+export XDG_SESSION_TYPE=wayland
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+
 if command -v "dyff" &> /dev/null; then
   export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
 fi
@@ -672,3 +687,6 @@ unset -f cd 2>/dev/null
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash"
+
+mkdir -p "${HOME}/tmp"
+touch "${HOME}/tmp/bashrc.run"
