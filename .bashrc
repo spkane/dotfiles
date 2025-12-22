@@ -671,11 +671,7 @@ export JINA_DEFAULT_WORKSPACE_BASE="${HOME}/.jina/executor-workspace"
 export PATH="$PATH:/Users/spkane/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-for file in ${HOME}/.bash_completions/*; do
-  if [[ -e "$file" && -r "$file" ]]; then
-    source "$file"
-  fi
-done
+# Custom completions moved to .bash_profile to ensure they load after bash-completion framework
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/seankane/.lmstudio/bin"

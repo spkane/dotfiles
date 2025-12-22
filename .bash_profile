@@ -120,5 +120,12 @@ export PATH="$PATH:/Users/seankane/.lmstudio/bin"
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 [[ -r "/etc/profile.d/bash_completion.sh" ]] && . "/etc/profile.d/bash_completion.sh"
 
+# Load custom completions AFTER bash-completion framework
+for file in ${HOME}/.bash_completions/*; do
+  if [[ -e "$file" && -r "$file" ]]; then
+    source "$file"
+  fi
+done
+
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash"
