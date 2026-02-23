@@ -21,12 +21,6 @@ fi
 
 ulimit -n 4096
 
-if [[ "$-" == *i* ]] && [[ ! -o login ]]; then
-  if [[ -e ~/.bash_profile ]]; then
-    . ~/.bash_profile
-  fi
-fi
-
 if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
   builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
 fi
@@ -492,7 +486,11 @@ shopt -s histappend
 export FOREIGN_ALIASES_OVERRIDE=True
 
 if [[ -z "$LC_EXTRATERM_COOKIE" ]]; then
-  PROMPT_COMMAND="history -a; history -r; history -n; ${PROMPT_COMMAND}"
+  if [[ -n "${PROMPT_COMMAND}" ]]; then
+    PROMPT_COMMAND="history -a; history -r; history -n; ${PROMPT_COMMAND}"
+  else
+    PROMPT_COMMAND="history -a; history -r; history -n"
+  fi
 fi
 
 #Apply our completions last
