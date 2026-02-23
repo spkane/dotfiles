@@ -1,0 +1,6 @@
+[keys.normal]
+Z = { Q = ":quit!", Z = ":x" }
+y = ["yank", ":clipboard-yank"]
+
+[keys.select]
+y = ["yank", ":clipboard-yank"]
