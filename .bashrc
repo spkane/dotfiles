@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash"
+
+
 # if not interactive return early
 [[ $- == *i* ]] || return
 
 #set -xv
 
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash"
 
 export NIX_BUILD_CORES=12
 
@@ -38,6 +40,11 @@ fi
 export TZ='America/Los_Angeles'
 
 # Don't forget to backup .inputrc (readline history searching)
+
+#FreeCAD
+export FREECAD_CMD=/Applications/FreeCAD.app/Contents/MacOS/FreeCAD
+export QT_QPA_FONTDIR=${HOME}/Library/Fonts
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
 
 #node (pre)
 export PATH="/usr/local/opt/node@10/bin:${PATH}"
@@ -191,6 +198,9 @@ export AWS_REGION="us-west-2"
 
 # Claude
 export MCP_LOG_LEVEL="ERROR"
+#export ANTHROPIC_AUTH_TOKEN=ollama
+#export ANTHROPIC_API_KEY=""
+#export ANTHROPIC_BASE_URL=http://localhost:11434
 
 #Vagrant
 export LOCAL_SSH_PRIVATE_KEY=~/.ssh/vagrant-id
@@ -386,12 +396,14 @@ alias stc-l='stc -homedir="/Users/spkane/Library/Application Support/Syncthing/"
 alias tf='terraform'
 alias tfp="tf plan -no-color | grep -E '^[[:punct:]]|Plan'"
 alias ungron="gron --ungron"
+alias vi="hx"
+alias vim="hx"
 alias va="vagrant"
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
 if command -v "keychain" &> /dev/null; then
 function load_keys {
-  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 B707FAABB70E763D)"
+  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020)"
 }
 fi
 
@@ -681,8 +693,20 @@ export PATH="$PATH:/Users/seankane/.lmstudio/bin"
 # Unset __zsh_like_cd if it exists to prevent errors
 unset -f cd 2>/dev/null
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/spkane/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.post.bash"
 
 mkdir -p "${HOME}/tmp"
 touch "${HOME}/tmp/bashrc.run"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"
+
+# Added by Macroscope installer
+export PATH="/Users/spkane/.local/bin:$PATH"

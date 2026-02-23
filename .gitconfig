@@ -120,6 +120,9 @@
 [protocol "file"]
   allow = always
 
+[coderabbit]
+	machineId = cli/d754553445994b8a81c1ca1ea32f3d10
+
 # Includes should be at the bottom
 [include]
   path = ~/.gitconfig.personal
@@ -127,6 +130,5 @@
 [includeIf "gitdir/i:~/class/"]
   path = ~/.gitconfig.personal.class
 
-[includeIf "gitdir/i:~/dev/ditto/"]
-  path = ~/.gitconfig.personal.ditto
-
+[includeIf "gitdir/i:~/dev/urun/"]
+  path = ~/.gitconfig.personal.urun

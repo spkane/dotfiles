@@ -1,12 +1,15 @@
-auto-update                = download
-font-family                = "Fira Code"
-font-size                  = 18
-mouse-hide-while-typing    = false
-shell-integration          = detect
-shell-integration-features = cursor,sudo,title
-window-height              = 40
-window-width               = 120
-window-save-state          = always
-window-theme               = auto
-window-title-font-family   = "Fira Code"
-
+auto-update                      = download
+command                          = /opt/homebrew/bin/bash -l
+font-family                      = "Fira Code"
+font-size                        = 18
+initial-command                  = /opt/home/brew/bin/bash -l
+mouse-hide-while-typing          = false
+shell-integration                = detect
+shell-integration-features       = cursor,sudo,title
+window-height                    = 40
+window-inherit-working-directory = false
+window-width                     = 120
+window-save-state                = always
+window-theme                     = auto
+window-title-font-family         = "Fira Code"
+working-directory                = home

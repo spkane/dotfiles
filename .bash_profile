@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash"
+
+
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # If not running interactively, don't do anything
 [[ $- == *i* ]] || return 0
 
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash"
 
 if [[ $- == *i* ]] && shopt -q login_shell; then
   if [ -e ~/.bashrc ]; then
@@ -26,7 +28,7 @@ fi
 #  export SSH_AUTH_SOCK=${HOME}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 #elif
 if command -v "keychain" &> /dev/null; then
-  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020 B707FAABB70E763D)"
+  hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020)"
 fi
 
 gpip(){
@@ -38,12 +40,6 @@ if command -v "dadjoke" &> /dev/null; then
   dadjoke random 2> /dev/null
   echo
 fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/google-cloud-sdk/path.bash.inc' ]; then source '/usr/local/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/google-cloud-sdk/completion.bash.inc' ]; then source '/usr/local/google-cloud-sdk/completion.bash.inc'; fi
 
 test -e "${HOME}/.cargo/env" && source "${HOME}/.cargo/env"
 
@@ -127,5 +123,37 @@ for file in ${HOME}/.bash_completions/*; do
   fi
 done
 
+# >>> Safety >>>
+[ -f "/Users/spkane/.safety/.safety_profile" ] && . "/Users/spkane/.safety/.safety_profile"
+# <<< Safety <<<
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/spkane/.lmstudio/bin"
+# End of LM Studio CLI section
+
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/spkane/tmp/google-cloud-sdk/path.bash.inc' ]; then . '/Users/spkane/tmp/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/spkane/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/spkane/tmp/google-cloud-sdk/completion.bash.inc'; fi
+
+# Added by Macroscope installer
+export PATH="/Users/spkane/.local/bin:$PATH"

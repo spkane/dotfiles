@@ -141,7 +141,7 @@ user_alias = "sk"
 symbol = "☊"
 
 [python]
-format = '[${symbol}${pyenv_prefix}${version}($virtualenv)]($style) '
+format = '[${symbol}${pyenv_prefix}${version}(-$virtualenv)]($style) '
 style = 'yellow'
 
 [ruby]
