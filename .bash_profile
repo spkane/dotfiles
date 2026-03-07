@@ -149,11 +149,11 @@ export PATH="$PATH:/Users/spkane/.lmstudio/bin"
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/spkane/tmp/google-cloud-sdk/path.bash.inc' ]; then . '/Users/spkane/tmp/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/spkane/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/spkane/tmp/google-cloud-sdk/completion.bash.inc'; fi
-
 # Added by Macroscope installer
 export PATH="/Users/spkane/.local/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/spkane/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/spkane/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/spkane/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/spkane/Downloads/google-cloud-sdk/completion.bash.inc'; fi

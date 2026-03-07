@@ -106,36 +106,14 @@ disabled = false
 [kubernetes]
 format = '[$symbol$user@$context\($namespace\)]($style) '
 symbol = '⛵'
-style = 'green'
+style = 'green' 
 disabled = false
 
 [[kubernetes.contexts]]
-context_pattern = ".*/*term-finance-k8s-mainnet"
-user_pattern = ".*/*term-finance-k8s-mainnet"
+context_pattern = 'arn:aws:eks:[^:]+:\d+:cluster/(?P<cluster>.+)'
 style = "bold red"
-context_alias = "tf-mainnet"
-user_alias = "admin"
-
-[[kubernetes.contexts]]
-context_pattern = ".*/*term-finance-k8s-testnet"
-user_pattern = ".*/*term-finance-k8s-testnet"
-style = "yellow"
-context_alias = "tf-testnet"
-user_alias = "admin"
-
-[[kubernetes.contexts]]
-context_pattern = ".*/*cluster/superorbital-dev-spkane"
-user_pattern = ".*/*cluster/superorbital-dev-spkane"
-style = "yellow"
-context_alias = "so-dev-spkane"
-user_alias = "admin"
-
-[[kubernetes.contexts]]
-context_pattern = "sean.kane-us-east-1-prod.cfa-test-k8s.ditto.live"
-user_pattern = "sean.kane-us-east-1-prod.cfa-test-k8s.ditto.live"
-style = "yellow"
-context_alias = "ditto-CFA-test"
-user_alias = "sk"
+context_alias = "$cluster"
+user_alias = "sean"
 
 [nodejs]
 symbol = "☊"

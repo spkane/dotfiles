@@ -9,7 +9,8 @@
 
 #set -xv
 
-
+export UPGRADE_DAGGER_LOCK=true
+export FIGNORE=.git:.terraform:
 export NIX_BUILD_CORES=12
 
 export KUBECONFIG="${HOME}/.kube/config"
@@ -354,6 +355,7 @@ alias kevents="kubecolor get events -A --sort-by='{.lastTimestamp}'"
 alias kex="kubecolor explain --recursive"
 alias kg='kubecolor get'
 alias kgp='kubecolor get pod'
+alias kgpu='kubectl get nodes -l karpenter.sh/nodepool=gpu -o custom-columns="NAME:.metadata.name,INSTANCE:.metadata.labels.node\.kubernetes\.io/instance-type,GPUS:.status.capacity.nvidia\.com/gpu,AGE:.metadata.creationTimestamp,STATUS:.status.conditions[-1].type"'
 alias kgsvcoyaml='kubecolor get service -o=yaml'
 alias kgsvcslwn='watch kubecolor get service --show-labels --namespace'
 alias kgsvcwn='watch kubecolor get service --namespace'
@@ -367,6 +369,7 @@ function kns() {
 alias komgd='kubecolor delete --grace-period 0 --force'
 alias kr='kubecolor run'
 alias ksysgpo='kubecolor --namespace=kube-system get pod'
+alias kubectl='kubecolor'
 alias kun='kubecolor config unset current-context'
 alias kus='kustomize'
 alias kuse='kubecolor config use-context '
