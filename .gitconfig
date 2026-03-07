@@ -3,6 +3,9 @@
   editor = code --wait --new-window
   pager = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
 
+[credential]
+	helper = osxkeychain
+
 [format]
   numbered = auto
 
@@ -103,14 +106,11 @@
 [hub]
   host = github.com
 
-[url "git@github.com:"]
-  insteadOf = https://github.com/
-
-[url "git@github.com:"]
-  insteadOf = http://github.com/
+[url "https://github.com/"]
+  insteadOf = git@github.com:
 
 [init]
-	templateDir = /Users/spkane/.git-template
+  templateDir = /Users/spkane/.git-template
   defaultBranch = main
 
 [safe]
