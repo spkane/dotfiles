@@ -1,8 +1,8 @@
 auto-update                      = download
-command                          = /opt/homebrew/bin/bash -l
+command                          = /opt/homebrew/bin/bash -li
 font-family                      = "Fira Code"
 font-size                        = 18
-initial-command                  = /opt/home/brew/bin/bash -l
+initial-command                  = /opt/homebrew/bin/bash -li
 mouse-hide-while-typing          = false
 shell-integration                = detect
 shell-integration-features       = cursor,sudo,title

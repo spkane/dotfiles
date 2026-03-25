@@ -157,3 +157,6 @@ if [ -f '/Users/spkane/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Use
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/spkane/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/spkane/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+
+# Added by Antigravity
+export PATH="/Users/spkane/.antigravity/antigravity/bin:$PATH"

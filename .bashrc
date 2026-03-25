@@ -390,7 +390,7 @@ alias rmc="rm -rf ${HOME}/class/* && rm -f ${HOME}/class/.???*"
 alias s="set -h && hash -r && _SHOW_MESSAGES=1 exec -a -bash bash"
 alias sshkg="ssh-keygen -R"
 alias stc-l='stc -homedir="/Users/spkane/Library/Application Support/Syncthing/"'
-alias tf='terraform'
+#alias tf='terraform'
 alias tfp="tf plan -no-color | grep -E '^[[:punct:]]|Plan'"
 alias ungron="gron --ungron"
 alias vi="hx"
@@ -478,21 +478,22 @@ if [ "${UNAME}" != "Darwin" ]; then
 fi
 
 #Bash History
-export HISTSIZE=10000
-export HISTFILESIZE=100000
-export HISTCONTROL=ignoreboth:erasedups
-export HISTTIMEFORMAT="%d/%m/%y %T "
+export HISTSIZE=50000
+export HISTFILESIZE=500000
+export HISTCONTROL=ignoreboth
+# export HISTTIMEFORMAT="%d/%m/%y %T "    # This breaks the erasedups functionality
 export HISTIGNORE="ls:pwd:clear:reset:[bf]g:exit"
 shopt -s histappend
+shopt -s cmdhist
 
 #xonsh
 export FOREIGN_ALIASES_OVERRIDE=True
 
 if [[ -z "$LC_EXTRATERM_COOKIE" ]]; then
   if [[ -n "${PROMPT_COMMAND}" ]]; then
-    PROMPT_COMMAND="history -a; history -r; history -n; ${PROMPT_COMMAND}"
+    PROMPT_COMMAND="history -a; history -c; history -r; ${PROMPT_COMMAND}"
   else
-    PROMPT_COMMAND="history -a; history -r; history -n"
+    PROMPT_COMMAND="history -a; history -c; history -r"
   fi
 fi
 
