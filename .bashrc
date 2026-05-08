@@ -393,6 +393,14 @@ alias stc-l='stc -homedir="/Users/spkane/Library/Application Support/Syncthing/"
 #alias tf='terraform'
 alias tfp="tf plan -no-color | grep -E '^[[:punct:]]|Plan'"
 alias ungron="gron --ungron"
+alias uadev="argocd login argocd.usw2.dev.priv.urun.sh --sso"
+alias uaprod="argocd login argocd.usw2.prod.priv.urun.sh --sso"
+alias uaprode="argocd login argocd.use2.prod.priv.urun.sh --sso"
+alias uasbox="argocd login argocd.use2.sbox.priv.urun.sh --sso"
+alias ukdev="aws eks update-kubeconfig --region us-west-2 --name dev-usw2 --profile=urun-dev"
+alias ukprod="aws eks update-kubeconfig --region us-west-2 --name prod-usw2 --profile=urun-prod"
+alias ukprode="aws eks update-kubeconfig --region us-east-2 --name prod-use2 --profile=urun-prod"
+alias uksbox="aws eks update-kubeconfig --region us-west-2 --name sandbox-usw2 --profile=urun-sandbox"
 alias vi="hx"
 alias vim="hx"
 alias va="vagrant"
@@ -525,8 +533,8 @@ export FZF_DEFAULT_OPS="--extended"
 
 # This appears to break incoming SCP in at least some circumstances...
 if [[ $- == *i* ]]; then
-  if command -v "pipenv" &> /dev/null; then
-    eval "$(_PIPENV_COMPLETE=bash_source pipenv)"
+  if [ -f $(brew --prefix)/etc/bash_completion.d/pipenv.bash-completion ]; then
+    . $(brew --prefix)/etc/bash_completion.d/pipenv.bash-completion
   fi
 fi
 
