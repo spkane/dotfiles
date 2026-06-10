@@ -1,10 +1,10 @@
 [core]
   excludesfile = /Users/spkane/.gitignore
   editor = code --wait --new-window
-  pager = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
+  #pager = /opt/homebrew/share/git-core/contrib/diff-highlight/diff-highlight | less -erFiJM~ -j3 --tabs=3
 
 [credential]
-	helper = osxkeychain
+	#helper = osxkeychain
 
 [format]
   numbered = auto
@@ -110,12 +110,12 @@
   insteadOf = git@github.com:
 
 [init]
-  templateDir = /Users/spkane/.git-template
+  templateDir = /home/spkane/.git-template
   defaultBranch = main
 
 [safe]
-  directory = /Users/spkane/dev/spkane/vde_vmnet
-  directory = /Users/spkane/dev/spkane/vde_vmnet/vde-2
+  #directory = /Users/spkane/dev/spkane/vde_vmnet
+  #directory = /Users/spkane/dev/spkane/vde_vmnet/vde-2
 
 [protocol "file"]
   allow = always

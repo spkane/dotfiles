@@ -1,0 +1,85 @@
+{
+  "providers": {
+     "anthropic": {
+       "apiKey": "${ANTHROPIC_API_KEY}",
+       "models": [
+         {
+           "id": "claude-fable-5",
+           "name": "fable"
+         },
+         {
+           "id": "claude-opus-4-8",
+           "name": "opus-review"
+         },
+         {
+           "id": "claude-sonnet-4-6",
+           "name": "sonnet-impl"
+         },
+         {
+           "id": "claude-haiku-4-5",
+           "name": "haiku-cheap"
+         }
+       ]
+     },
+    "openai": {
+      "apiKey": "${OPENAI_API_KEY}",
+      "models": [
+        {
+          "id": "gpt-5.5",
+          "name": "openai-planner-reviewer"
+        },
+        {
+          "id": "gpt-5.4",
+          "name": "openai-strong-general"
+        },
+        {
+          "id": "gpt-5.4-mini",
+          "name": "openai-fast"
+        },
+        {
+          "id": "gpt-5.4-nano",
+          "name": "openai-cheap"
+        },
+        {
+          "id": "gpt-5-codex",
+          "name": "openai-coding-agent"
+        },
+        {
+          "id": "gpt-image-1",
+          "name": "openai-image"
+        },
+        {
+          "id": "gpt-audio",
+          "name": "openai-audio"
+        },
+        {
+          "id": "gpt-realtime",
+          "name": "openai-realtime"
+        }
+      ]
+    },
+    "ollama": {
+      "baseUrl": "http://localhost:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "compat": {
+        "supportsDeveloperRole": false,
+        "supportsReasoningEffort": false
+      },
+      "models": [
+        {
+          "id": "qwen3.6:27b",
+          "name": "local-main"
+        },
+        {
+          "id": "qwen3-coder:30b",
+          "name": "local-scout"
+        },
+        {
+          "id": "nomic-embed-text",
+          "name": "embeddings"
+        }
+      ]
+    }
+  }
+}

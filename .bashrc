@@ -3,6 +3,7 @@
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bashrc.pre.bash"
 
+export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 
 # if not interactive return early
 [[ $- == *i* ]] || return
@@ -382,6 +383,10 @@ alias mtr="sudo mtr"
 if command -v "op" &> /dev/null; then
   alias opl="eval \$(op signin my)"
 fi
+alias node="/usr/bin/node-24"
+alias npm="/usr/bin/npm-24"
+alias node-22="/usr/bin/node"
+alias npm-22="/usr/bin/npm"
 alias pe="pipenv"
 alias pes="pipenv shell"
 alias pc="/opt/homebrew/bin/pre-commit"
@@ -406,7 +411,7 @@ alias vi="hx"
 alias vim="hx"
 alias va="vagrant"
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
-
+alias whisp="whisper ~/Music/Recordings/recording.m4a --model large-v3-turbo --language en"
 if command -v "keychain" &> /dev/null; then
 function load_keys {
   hash keychain 2>&- && eval "$(keychain --eval --agents ssh,gpg --inherit any id_ed25519_2020)"
@@ -721,3 +726,19 @@ touch "${HOME}/tmp/bashrc.run"
 
 # Added by Macroscope installer
 export PATH="/Users/spkane/.local/bin:$PATH"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+. "$HOME/.cargo/env"
+
+# opencode
+export PATH=/home/spkane/.opencode/bin:$PATH
+
+unset -f ml
+
+# pnpm
+export PNPM_HOME="/home/spkane/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

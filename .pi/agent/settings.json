@@ -1,0 +1,7 @@
+{
+  "lastChangelogVersion": "0.79.0",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-fable-5",
+  "defaultThinkingLevel": "high",
+  "theme": "tau-dark"
+}
