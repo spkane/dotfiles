@@ -392,6 +392,7 @@ alias sshkg="ssh-keygen -R"
 alias stc-l='stc -homedir="/Users/spkane/Library/Application Support/Syncthing/"'
 #alias tf='terraform'
 alias tfp="tf plan -no-color | grep -E '^[[:punct:]]|Plan'"
+alias un="unset UPGRADE_DAGGER_LOCK && git stash --include-untracked && git co main && git pull && git stash pop && export UPGRADE_DAGGER_LOCK=true"
 alias ungron="gron --ungron"
 alias uadev="argocd login argocd.usw2.dev.priv.urun.sh --sso"
 alias uaprod="argocd login argocd.usw2.prod.priv.urun.sh --sso"
