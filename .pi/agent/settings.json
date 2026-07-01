@@ -1,7 +1,18 @@
 {
   "lastChangelogVersion": "0.79.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-fable-5",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
-  "theme": "tau-dark"
+  "theme": "tau-dark",
+  "packages": [
+    "npm:pi-subagents",
+    "npm:pi-mcp-adapter",
+    "npm:pi-web-access",
+    "npm:pi-hermes-memory",
+    "npm:pi-lens",
+    "npm:pi-goals",
+    "npm:@trevonistrevon/pi-loop",
+    "npm:pi-dynamic-workflows",
+    "npm:pi-monitor-plugin"
+  ]
 }

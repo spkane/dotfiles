@@ -160,4 +160,4 @@ if [ -f '/Users/spkane/Downloads/google-cloud-sdk/completion.bash.inc' ]; then .
 
 # Added by Antigravity
 export PATH="/Users/spkane/.antigravity/antigravity/bin:$PATH"
-. "$HOME/.cargo/env"
+

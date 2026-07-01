@@ -1,0 +1,23 @@
+Tau recommended Pi extensions in app/docs should mirror the user's locally configured Pi packages: pi-subagents, pi-mcp-adapter, pi-web-access, pi-hermes-memory, pi-lens, pi-goals, pi-routines, and @trevonistrevon/pi-loop. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+In Tau, @trevonistrevon/pi-loop is the recommended installed Pi extension for scheduled tasks/loops; it supports cron/interval and one-shot behavior and registers /loop and /tasks commands. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+In k8s-manifests dev-usw2 agents, image references should be pinned to immutable OCI index digests and the human-readable tag should document the source build (commit-ish tag), not `:latest`, even when paired with `@sha256`. Values live in `clusters/dev-usw2/agents/values.yaml`; rendered deployments live in `rendered/dev-usw2/agents/deployment-*.yaml`. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+Tau multi-session/compaction UX expectation: when compaction starts, create a visible compaction text bubble and update both the session tab status and the normal status location so users can clearly see compaction is in progress. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+Tau recommended Pi extensions should mirror the user's local pi package set where appropriate; local config included pi-subagents, pi-mcp-adapter, pi-web-access, pi-hermes-memory, pi-lens, pi-goals, pi-routines, and @trevonistrevon/pi-loop. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+skypilot-controller decision: `runtime.assignmentMode: agent` should be wired as runner live-profile/deployment env config (`SKY_RUNNER_RUNTIME_ASSIGNMENT_MODE=agent` or `RUNTIME_ASSIGNMENT_MODE=agent`) rather than a public CRD field until the assignment contract is settled, preserving provider-neutral public API language. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+skypilot-controller paid/live launch gate: do not run the next paid SkyPilot launch until the launch-free assignment-agent path is verified end-to-end (agent mode wired into runner/request path, `/assign` contract defined, local fake assignment/config broker proves payload starts only after assignment and releases cleanly) and the SFU/session-gateway-to-runtime auth/security expectations are confirmed. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+skypilot-controller design decision: keep `runtime.assignmentMode: agent` as runner/live-profile configuration selected via env (`SKY_RUNNER_RUNTIME_ASSIGNMENT_MODE=agent` or `RUNTIME_ASSIGNMENT_MODE=agent`) rather than adding a public CRD field until the assignment contract is fully settled, preserving provider-neutral public API vocabulary. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+skypilot-controller decision: keep `runtime.assignmentMode: agent` as runner/live-profile configuration for now, not a public CRD field, to avoid adding public API vocabulary before the assignment contract is settled. Select via `SKY_RUNNER_RUNTIME_ASSIGNMENT_MODE=agent` (or `RUNTIME_ASSIGNMENT_MODE=agent`) in manager env config. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+skypilot-controller workflow/conventions: use `just` recipes for verification; common gates observed green include `GOROOT=${GOROOT:-$(go env GOROOT)} just verify-s05`, `pre-commit run --all-files`, focused Go tests (`go test ./cmd/manager ./internal/controller ./internal/control -count=1`), and runner tests via `uv run pytest runner/test_bootstrap.py runner/test_skypilot_runner.py -q`. Do not run paid/live SkyPilot capacity until explicitly approved. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+skypilot-controller: Semgrep may flag argv-based `exec.Command` in `internal/control/skypilot_runner.go` as dangerous non-static command; audit it as operator-configured/non-shell-expanded and use a narrow suppression comment with rationale if appropriate. <!-- created=2026-06-29, last=2026-06-29 -->
+§
+skypilot-controller architecture decision: launch-free worker assignment-agent mode is controlled by live-profile/manager env (`SKY_RUNNER_RUNTIME_ASSIGNMENT_MODE=agent` or `RUNTIME_ASSIGNMENT_MODE=agent`) and carried through the SkyPilot runner request/bootstrap, not exposed as a public CRD field. Worker agent contract includes `POST /assign`, `POST /release`, `GET /healthz`, and `GET /status`; assignment must be bounded non-secret identity fields, and optional config broker URL is passed via `URUN_ASSIGNMENT_CONFIG_URL`. <!-- created=2026-06-29, last=2026-06-29 -->

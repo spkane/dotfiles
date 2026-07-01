@@ -1,26 +1,26 @@
 {
   "providers": {
-     "anthropic": {
-       "apiKey": "${ANTHROPIC_API_KEY}",
-       "models": [
-         {
-           "id": "claude-fable-5",
-           "name": "fable"
-         },
-         {
-           "id": "claude-opus-4-8",
-           "name": "opus-review"
-         },
-         {
-           "id": "claude-sonnet-4-6",
-           "name": "sonnet-impl"
-         },
-         {
-           "id": "claude-haiku-4-5",
-           "name": "haiku-cheap"
-         }
-       ]
-     },
+    "anthropic": {
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "models": [
+        {
+          "id": "claude-fable-5",
+          "name": "fable"
+        },
+        {
+          "id": "claude-opus-4-8",
+          "name": "opus-review"
+        },
+        {
+          "id": "claude-sonnet-4-6",
+          "name": "sonnet-impl"
+        },
+        {
+          "id": "claude-haiku-4-5",
+          "name": "haiku-cheap"
+        }
+      ]
+    },
     "openai": {
       "apiKey": "${OPENAI_API_KEY}",
       "models": [
@@ -78,10 +78,6 @@
         {
           "id": "nomic-embed-text",
           "name": "embeddings"
-        },
-        {
-          "id": "glm-5.2:cloud",
-          "name": "glm52"        
         }
       ]
     }

@@ -383,10 +383,10 @@ alias mtr="sudo mtr"
 if command -v "op" &> /dev/null; then
   alias opl="eval \$(op signin my)"
 fi
-alias node="/usr/bin/node-24"
-alias npm="/usr/bin/npm-24"
-alias node-22="/usr/bin/node"
-alias npm-22="/usr/bin/npm"
+#alias node="/usr/bin/node-24"
+#alias npm="/usr/bin/npm-24"
+#alias node-22="/usr/bin/node"
+#alias npm-22="/usr/bin/npm"
 alias pe="pipenv"
 alias pes="pipenv shell"
 alias pc="/opt/homebrew/bin/pre-commit"
@@ -403,10 +403,12 @@ alias uadev="argocd login argocd.usw2.dev.priv.urun.sh --sso"
 alias uaprod="argocd login argocd.usw2.prod.priv.urun.sh --sso"
 alias uaprode="argocd login argocd.use2.prod.priv.urun.sh --sso"
 alias uasbox="argocd login argocd.use2.sbox.priv.urun.sh --sso"
+alias uasboxsae="argocd login argocd.sae1.sbox.priv.urun.sh --sso"
 alias ukdev="aws eks update-kubeconfig --region us-west-2 --name dev-usw2 --profile=urun-dev"
 alias ukprod="aws eks update-kubeconfig --region us-west-2 --name prod-usw2 --profile=urun-prod"
 alias ukprode="aws eks update-kubeconfig --region us-east-2 --name prod-use2 --profile=urun-prod"
 alias uksbox="aws eks update-kubeconfig --region us-west-2 --name sandbox-usw2 --profile=urun-sandbox"
+alias uksboxsae="aws eks update-kubeconfig --region sa-east-1 --name sandbox-sae1 --profile=urun-sandbox"
 alias vi="hx"
 alias vim="hx"
 alias va="vagrant"
@@ -727,8 +729,13 @@ touch "${HOME}/tmp/bashrc.run"
 # Added by Macroscope installer
 export PATH="/Users/spkane/.local/bin:$PATH"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
-. "$HOME/.cargo/env"
+if [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+fi
+
+if [[ -f  $HOME/.cargo/env ]]; then
+  . "$HOME/.cargo/env"
+fi
 
 # opencode
 export PATH=/home/spkane/.opencode/bin:$PATH
